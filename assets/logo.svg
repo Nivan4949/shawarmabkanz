@@ -1,0 +1,108 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500" width="100%" height="100%">
+  <!-- Outer glowing red circle with white border -->
+  <circle cx="250" cy="250" r="230" fill="#E61C24" stroke="#ffffff" stroke-width="4" />
+  
+  <!-- Red inner glow shadow -->
+  <circle cx="250" cy="250" r="226" fill="none" stroke="#B31217" stroke-width="4" opacity="0.3" />
+
+  <g id="flame-and-spit" transform="translate(0, -10)">
+    <!-- Yellow Flame Background with White Outline -->
+    <!-- Large fire/flame path -->
+    <path d="M 250 80 
+             C 275 60, 315 70, 325 110 
+             C 335 150, 310 185, 335 220 
+             C 355 245, 370 215, 390 225
+             C 400 230, 360 280, 320 290
+             C 270 302, 230 290, 200 280
+             C 170 270, 150 250, 150 210
+             C 150 160, 195 160, 195 130
+             C 195 100, 220 100, 250 80 Z" 
+          fill="#F1C40F" stroke="#ffffff" stroke-width="5" stroke-linejoin="round" />
+
+    <!-- Red details inside the flame for definition -->
+    <path d="M 250 100 
+             C 265 90, 295 95, 305 125 
+             C 315 155, 290 190, 315 220 
+             C 325 230, 330 220, 345 225" 
+          fill="none" stroke="#E61C24" stroke-width="3" stroke-linecap="round" />
+    
+    <path d="M 210 160
+             C 205 135, 215 130, 235 115"
+          fill="none" stroke="#E61C24" stroke-width="3" stroke-linecap="round" />
+
+    <!-- Horizontal Shawarma Spit Skewer -->
+    <!-- The metal rod skewering the meat horizontally -->
+    <line x1="120" y1="230" x2="410" y2="230" stroke="#F1C40F" stroke-width="8" stroke-linecap="round" />
+    <line x1="120" y1="230" x2="410" y2="230" stroke="#ffffff" stroke-width="3" stroke-linecap="round" />
+
+    <!-- Shawarma Meat / Spit Shape (Yellow / Orange gradient look, with white border) -->
+    <!-- Horizontal spit cone, wider on left, narrower on right -->
+    <path d="M 215 190 
+             C 205 190, 200 200, 200 230 
+             C 200 260, 205 270, 215 270
+             L 345 255
+             C 355 254, 360 240, 360 230
+             C 360 220, 355 206, 345 205
+             Z" 
+          fill="#F39C12" stroke="#ffffff" stroke-width="4" stroke-linejoin="round" />
+
+    <!-- Skewer handle/stopper details -->
+    <path d="M 195 210 L 195 250" stroke="#ffffff" stroke-width="5" stroke-linecap="round" />
+    <path d="M 365 215 L 365 245" stroke="#ffffff" stroke-width="5" stroke-linecap="round" />
+
+    <!-- Arabic Text "شاورما" written inside/above the spit -->
+    <!-- Since fonts might not render identically on all machines, we draw Arabic text using paths, combined with text styling for fallback -->
+    <!-- "شاورما" stylized -->
+    <text x="285" y="242" font-family="'Cairo', 'Tajawal', 'Arial', sans-serif" font-weight="900" font-size="34" fill="#ffffff" text-anchor="middle">شاورما</text>
+    
+    <!-- "بي" stylized on the left -->
+    <text x="180" y="270" font-family="'Cairo', 'Tajawal', 'Arial', sans-serif" font-weight="900" font-size="44" fill="#ffffff" text-anchor="middle">بي</text>
+  </g>
+
+  <!-- Brand English name "kanz" in white lowercase -->
+  <text x="250" y="340" font-family="'Outfit', 'Inter', 'Arial Black', sans-serif" font-weight="900" font-size="52" fill="#ffffff" text-anchor="middle" letter-spacing="1">kanz</text>
+
+  <!-- Thin white line below "kanz" -->
+  <line x1="160" y1="362" x2="340" y2="362" stroke="#ffffff" stroke-width="3" stroke-linecap="round" opacity="0.9" />
+
+  <!-- Four food circles below the line, with vertical dividing lines -->
+  <g id="bottom-icons" transform="translate(0, 10)">
+    <!-- Burger Circle & Icon (X=175) -->
+    <circle cx="175" cy="405" r="18" fill="none" stroke="#ffffff" stroke-width="2" />
+    <!-- Burger Path -->
+    <path d="M 167 405 C 167 399, 183 399, 183 405 Z" fill="none" stroke="#ffffff" stroke-width="1.8" /> <!-- Top Bun -->
+    <line x1="165" y1="407" x2="185" y2="407" stroke="#ffffff" stroke-width="1.8" /> <!-- Patty -->
+    <path d="M 167 410 C 167 413, 183 413, 183 410 Z" fill="none" stroke="#ffffff" stroke-width="1.8" /> <!-- Bottom Bun -->
+
+    <!-- Divider 1 -->
+    <line x1="200" y1="392" x2="200" y2="418" stroke="#ffffff" stroke-width="1" opacity="0.6" />
+
+    <!-- Sandwich/Sub Circle & Icon (X=225) -->
+    <circle cx="225" cy="405" r="18" fill="none" stroke="#ffffff" stroke-width="2" />
+    <!-- Sandwich Path (Sub bread) -->
+    <rect x="214" y="401" width="22" height="8" rx="4" fill="none" stroke="#ffffff" stroke-width="1.8" />
+    <line x1="218" y1="403" x2="220" y2="407" stroke="#ffffff" stroke-width="1.2" />
+    <line x1="224" y1="403" x2="226" y2="407" stroke="#ffffff" stroke-width="1.2" />
+    <line x1="230" y1="403" x2="232" y2="407" stroke="#ffffff" stroke-width="1.2" />
+
+    <!-- Divider 2 -->
+    <line x1="250" y1="392" x2="250" y2="418" stroke="#ffffff" stroke-width="1" opacity="0.6" />
+
+    <!-- Wrap Circle & Icon (X=275) -->
+    <circle cx="275" cy="405" r="18" fill="none" stroke="#ffffff" stroke-width="2" />
+    <!-- Wrap Path (Shawarma Roll) -->
+    <path d="M 267 413 L 281 397" stroke="#ffffff" stroke-width="2" stroke-linecap="round" />
+    <path d="M 271 415 L 283 401" stroke="#ffffff" stroke-width="2" stroke-linecap="round" />
+    <path d="M 278 397 C 281 395, 284 398, 282 401 Z" fill="#ffffff" /> <!-- filling sticking out -->
+
+    <!-- Divider 3 -->
+    <line x1="300" y1="392" x2="300" y2="418" stroke="#ffffff" stroke-width="1" opacity="0.6" />
+
+    <!-- Drink Cup Circle & Icon (X=325) -->
+    <circle cx="325" cy="405" r="18" fill="none" stroke="#ffffff" stroke-width="2" />
+    <!-- Cup Path -->
+    <path d="M 319 399 L 321 413 C 321 414, 329 414, 329 413 L 331 399 Z" fill="none" stroke="#ffffff" stroke-width="1.8" stroke-linejoin="round" />
+    <line x1="317" y1="399" x2="333" y2="399" stroke="#ffffff" stroke-width="1.8" /> <!-- Lid -->
+    <line x1="327" y1="399" x2="331" y2="392" stroke="#ffffff" stroke-width="1.8" stroke-linecap="round" /> <!-- Straw -->
+  </g>
+</svg>

@@ -17,6 +17,7 @@ export default function OffersPage() {
       descKey: "offer_combo1_desc",
       price: 10.99,
       tag: "15% OFF",
+      image: "/assets/hero_shawarma.png",
       items: [
         { labelEn: "1 Classic Chicken Wrap", labelAr: "١ رول شاورما دجاج" },
         { labelEn: "1 Fries", labelAr: "١ بطاطس مقرمشة" },
@@ -30,6 +31,7 @@ export default function OffersPage() {
       descKey: "offer_combo2_desc",
       price: 19.99,
       tag: "20% OFF",
+      image: "/assets/spit_burger.png",
       items: [
         { labelEn: "2 Double Kanz Wraps", labelAr: "٢ رول دبل كنز شاورما" },
         { labelEn: "1 Large Fries", labelAr: "١ بطاطس عائلي" },
@@ -43,6 +45,7 @@ export default function OffersPage() {
       descKey: "offer_combo3_desc",
       price: 39.99,
       tag: "BEST VALUE",
+      image: "/assets/baguette_sub.png",
       items: [
         { labelEn: "4 Assorted Sandwiches", labelAr: "٤ سندوتشات مشكلة" },
         { labelEn: "2 Spit Burgers", labelAr: "٢ برجر على اللهب" },
@@ -69,7 +72,7 @@ export default function OffersPage() {
       addons: [],
       unitPrice: combo.price,
       quantity: 1,
-      image: "/assets/hero_shawarma.png"
+      image: combo.image
     };
 
     addToCart(cartItem);
@@ -111,7 +114,7 @@ export default function OffersPage() {
 
                 <div className="relative h-48 overflow-hidden bg-black/20">
                   <img
-                    src="/assets/hero_shawarma.png"
+                    src={combo.image}
                     alt={title}
                     className="w-full h-full object-cover opacity-60 group-hover:scale-105 transition-transform duration-500"
                   />

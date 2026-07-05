@@ -12,7 +12,7 @@ const translationsEn = {
   nav_contact: "Find Us",
   hero_badge: "🔥 Pure Spit-Roasted Perfection",
   hero_title_accent: "Taste the Treasure",
-  hero_title_main: "of Flame-Sear",
+  hero_title_main: "of Flame-Seared Shawarma",
   hero_desc: "Born from flame, infused with our legendary 18-spice recipe, and carved hot onto artisan flatbreads. Taste the true treasure of shawarma.",
   hero_cta_order: "Order Online Now",
   hero_cta_explore: "Explore Spit Secret",

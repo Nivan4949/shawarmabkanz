@@ -136,8 +136,9 @@ export const SpitExperience: React.FC = () => {
           <div className="flex flex-col justify-center">
             <div className="relative min-h-[220px] w-full">
               <AnimatePresence mode="wait">
-                {spitCards.map((card) => {
-                  if (card.id !== activeHotspot) return null;
+                {(() => {
+                  const card = spitCards.find(c => c.id === activeHotspot);
+                  if (!card) return null;
                   return (
                     <motion.div
                       key={card.id}
@@ -158,7 +159,7 @@ export const SpitExperience: React.FC = () => {
                       </p>
                     </motion.div>
                   );
-                })}
+                })()}
               </AnimatePresence>
             </div>
           </div>

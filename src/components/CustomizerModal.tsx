@@ -69,7 +69,7 @@ export const CustomizerModal: React.FC = () => {
       addons: selectedAddons,
       unitPrice: totalPrice,
       quantity: 1,
-      image: "/assets/hero_shawarma.png",
+      image: customizerItem.image,
     };
 
     addToCart(cartItem);
@@ -113,7 +113,7 @@ export const CustomizerModal: React.FC = () => {
             {/* Header Image & Info */}
             <div className="relative h-44 flex items-end p-6 border-b border-white/5">
               <img
-                src="/assets/hero_shawarma.png"
+                src={customizerItem.image}
                 alt={name}
                 className="absolute inset-0 w-full h-full object-cover opacity-40"
               />

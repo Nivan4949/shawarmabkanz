@@ -22,6 +22,7 @@ export interface MenuItem {
   descEn: string;
   descAr: string;
   price: number;
+  image: string;
   badgeEn?: string;
   badgeAr?: string;
   sizes: SizeOption[];
@@ -52,6 +53,7 @@ export const menuItems: MenuItem[] = [
     descEn: "Slow-roasted chicken wrap with garlic paste, crispy fries, and pickles in toasted Saj bread.",
     descAr: "شاورما دجاج بخلطة كانز الخاصة، ثومية، بطاطس مقرمشة، ومخلل بخبز الصاج المحمص.",
     price: 6.99,
+    image: "/assets/hero_shawarma.png",
     badgeEn: "Best Seller",
     badgeAr: "الأكثر مبيعاً",
     sizes: [
@@ -71,6 +73,7 @@ export const menuItems: MenuItem[] = [
     descEn: "Flame-grilled shaved beef with spicy tahini sauce, biwaz (sumac-onion salad), and chili paste.",
     descAr: "شرائح لحم بقري مشوية مع صلصة طحينة حارة، بيواز (بصل بالسماق)، وشطة حارة.",
     price: 7.99,
+    image: "/assets/hero_shawarma.png",
     badgeEn: "Spicy",
     badgeAr: "حار نار",
     sizes: [
@@ -90,6 +93,7 @@ export const menuItems: MenuItem[] = [
     descEn: "Juicy flame-grilled beef patty stacked with shaved beef shawarma, melted cheddar, and smoked secret sauce.",
     descAr: "شريحة برجر بقري مشوي مغطاة بشرائح شاورما لحم، جبن شيدر ذائب، وصلصة فلفل مدخن.",
     price: 9.49,
+    image: "/assets/spit_burger.png",
     badgeEn: "Signature",
     badgeAr: "توقيعنا الخاص",
     sizes: [
@@ -109,6 +113,7 @@ export const menuItems: MenuItem[] = [
     descEn: "Crispy hand-breaded chicken breast, loaded with garlic aioli, cheddar cheese, pickles, and shredded lettuce.",
     descAr: "صدر دجاج مقرمش مغطى بصلصة ثوم أيولي وجبن شيدر، مخلل، وخس مقطع.",
     price: 8.49,
+    image: "/assets/spit_burger.png",
     badgeEn: "Crispy",
     badgeAr: "مقرمش",
     sizes: [
@@ -128,6 +133,7 @@ export const menuItems: MenuItem[] = [
     descEn: "Warm toasted French baguette filled with shaved spit chicken, pickles, crispy fries, and garlic paste.",
     descAr: "خبز فرنسي محمص محشو بشرائح شاورما دجاج، مخلل، بطاطس مقرمشة، وثومية.",
     price: 7.49,
+    image: "/assets/baguette_sub.png",
     badgeEn: "Baguette",
     badgeAr: "خبز فرنسي",
     sizes: [
@@ -147,6 +153,7 @@ export const menuItems: MenuItem[] = [
     descEn: "Shaved spit-beef grilled with caramelized bell peppers, onions, and loaded with melted provolone.",
     descAr: "شاورما لحم مشوية على الصاج مع فلفل رومي وبصل مكرمل، وجبن بروفولون ذائب.",
     price: 8.99,
+    image: "/assets/baguette_sub.png",
     badgeEn: "Cheesy",
     badgeAr: "غرقان جبنة",
     sizes: [
@@ -166,6 +173,7 @@ export const menuItems: MenuItem[] = [
     descEn: "Fresh cold-pressed pomegranate juice infused with fresh mint leaves and a dash of lime.",
     descAr: "عصير رمان طازج معطر بأوراق النعناع البري وعصرة ليمون حامض.",
     price: 3.99,
+    image: "/assets/pomegranate_drink.png",
     badgeEn: "Fresh",
     badgeAr: "طازج",
     sizes: [
@@ -185,6 +193,7 @@ export const menuItems: MenuItem[] = [
     descEn: "A refreshing frozen blend of fresh lemon, spearmint, sparkling soda, and crushed ice.",
     descAr: "مزيج منعش من الليمون الطازج، النعناع، الصودا الفوارة والثلج المجروش.",
     price: 3.49,
+    image: "/assets/lemonade_drink.png",
     badgeEn: "Frozen",
     badgeAr: "ثلج منعش",
     sizes: [

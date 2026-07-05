@@ -14,6 +14,7 @@ export default function GalleryPage() {
       titleAr: "رول شاورما الدجاج الكلاسيكي",
       categoryEn: "Wraps",
       categoryAr: "اللفائف",
+      image: "/assets/hero_shawarma.png",
       prompt: "Luxury Arabic grilled chicken shawarma wrap served on a charcoal stone slab with garlic cream drips, gold ambient lighting, close-up food photography.",
     },
     {
@@ -21,6 +22,7 @@ export default function GalleryPage() {
       titleAr: "رول شاورما لحم لهب حار",
       categoryEn: "Wraps",
       categoryAr: "اللفائف",
+      image: "/assets/hero_shawarma.png",
       prompt: "Flame-seared sliced beef shawarma wrap wrapped in toasted saj bread, charcoal backgrounds, flying sparks, woodfire hearth lighting, macro photography.",
     },
     {
@@ -28,6 +30,7 @@ export default function GalleryPage() {
       titleAr: "برجر بقري على لهب السيخ",
       categoryEn: "Burgers",
       categoryAr: "البرجر",
+      image: "/assets/spit_burger.png",
       prompt: "Vibrant street-style beef burger topped with heap of shaved beef shawarma, melted cheddar cheese cascading down, glowing orange backdrop, premium food studio shot.",
     },
     {
@@ -35,6 +38,7 @@ export default function GalleryPage() {
       titleAr: "سندوتش باجيت كنز",
       categoryEn: "Sandwiches",
       categoryAr: "السندوتشات",
+      image: "/assets/baguette_sub.png",
       prompt: "Toasted baguette sub filled with chicken shawarma shavings, golden crispy fries, garlic paste smear, rustic wooden table background, warm dining room glow.",
     },
     {
@@ -42,6 +46,7 @@ export default function GalleryPage() {
       titleAr: "عصير رمان بالنعناع",
       categoryEn: "Drinks",
       categoryAr: "المشروبات",
+      image: "/assets/pomegranate_drink.png",
       prompt: "Fresh cold-pressed dark red pomegranate juice in a condensation-covered crystal glass, fresh green mint leaves garnish, black stone backdrop, cinematic backlight.",
     },
     {
@@ -49,6 +54,7 @@ export default function GalleryPage() {
       titleAr: "سيخ شاورما على موقد الحطب",
       categoryEn: "Hearth",
       categoryAr: "الموقد",
+      image: "/assets/lemonade_drink.png",
       prompt: "Authentic Middle Eastern vertical rotisserie roasting chicken shawarma over real oak wood logs, burning red embers, smoke rising, high-contrast culinary photo.",
     }
   ];
@@ -83,7 +89,7 @@ export default function GalleryPage() {
               >
                 {/* Image backdrop */}
                 <img
-                  src="/assets/hero_shawarma.png"
+                  src={item.image}
                   alt={title}
                   className="w-full h-full object-cover opacity-60 group-hover:scale-105 transition-transform duration-700"
                 />

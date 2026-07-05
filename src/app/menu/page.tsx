@@ -122,7 +122,7 @@ export default function MenuPage() {
                 >
                   <div className="relative h-44 overflow-hidden bg-black/20">
                     <img
-                      src="/assets/hero_shawarma.png"
+                      src={item.image}
                       alt={name}
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                     />

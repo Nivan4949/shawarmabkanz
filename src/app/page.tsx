@@ -213,39 +213,34 @@ export default function Home() {
             {/* Slider Container */}
             <div className="relative min-h-[300px]">
               <AnimatePresence mode="wait">
-                {reviews.map((review, idx) => {
-                  if (idx !== activeReviewIndex) return null;
-                  return (
-                    <motion.div
-                      key={idx}
-                      initial={{ opacity: 0, x: isRtl ? -50 : 50 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      exit={{ opacity: 0, x: isRtl ? 50 : -50 }}
-                      transition={{ duration: 0.4 }}
-                      className="w-full bg-[#1D1D1D] p-8 md:p-12 rounded-2xl border border-white/5 text-center flex flex-col items-center justify-center shadow-xl"
-                    >
-                      <div className="flex items-center gap-1 text-[#F1C40F] mb-6">
-                        {[...Array(5)].map((_, i) => (
-                          <Star key={i} className="w-5 h-5 fill-current" />
-                        ))}
-                      </div>
+                <motion.div
+                  key={activeReviewIndex}
+                  initial={{ opacity: 0, x: isRtl ? -50 : 50 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: isRtl ? 50 : -50 }}
+                  transition={{ duration: 0.4 }}
+                  className="w-full bg-[#1D1D1D] p-8 md:p-12 rounded-2xl border border-white/5 text-center flex flex-col items-center justify-center shadow-xl"
+                >
+                  <div className="flex items-center gap-1 text-[#F1C40F] mb-6">
+                    {[...Array(5)].map((_, i) => (
+                      <Star key={i} className="w-5 h-5 fill-current" />
+                    ))}
+                  </div>
 
-                      <p className="text-lg md:text-xl font-medium italic text-white/90 leading-relaxed mb-8 max-w-[640px]">
-                        {review.text}
-                      </p>
+                  <p className="text-lg md:text-xl font-medium italic text-white/90 leading-relaxed mb-8 max-w-[640px]">
+                    {reviews[activeReviewIndex].text}
+                  </p>
 
-                      <div className="flex items-center gap-4">
-                        <div className="w-12 h-12 rounded-full bg-gradient-to-r from-[#E61C24] to-[#F39C12] text-white font-extrabold flex items-center justify-center shadow-lg">
-                          {review.avatar}
-                        </div>
-                        <div className="text-left rtl:text-right">
-                          <h4 className="text-base font-bold text-white">{review.name}</h4>
-                          <span className="text-xs text-white/50">{t(review.titleKey)}</span>
-                        </div>
-                      </div>
-                    </motion.div>
-                  );
-                })}
+                  <div className="flex items-center gap-4">
+                    <div className="w-12 h-12 rounded-full bg-gradient-to-r from-[#E61C24] to-[#F39C12] text-white font-extrabold flex items-center justify-center shadow-lg">
+                      {reviews[activeReviewIndex].avatar}
+                    </div>
+                    <div className="text-left rtl:text-right">
+                      <h4 className="text-base font-bold text-white">{reviews[activeReviewIndex].name}</h4>
+                      <span className="text-xs text-white/50">{t(reviews[activeReviewIndex].titleKey)}</span>
+                    </div>
+                  </div>
+                </motion.div>
               </AnimatePresence>
             </div>
 

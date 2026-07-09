@@ -1,255 +1,334 @@
 "use client";
 
-import React, { useState } from "react";
-import Link from "next/link";
+import React, { useState, useEffect, useRef } from "react";
 import { useLanguage } from "@/context/LanguageContext";
-import { SpitExperience } from "@/components/SpitExperience";
+import { useCart, menuItems, MenuItem } from "@/context/CartContext";
+import { Search, Heart, Flame, Plus, Check, ArrowUpDown } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Flame, Compass, Star, ChevronLeft, ChevronRight, Sparkles } from "lucide-react";
 
 export default function Home() {
   const { t, locale, isRtl } = useLanguage();
-  const [activeReviewIndex, setActiveReviewIndex] = useState(0);
+  const { openCustomizer, addToCart } = useCart();
+  
+  const [activeCategory, setActiveCategory] = useState<"all" | "shawarma" | "burger" | "wrap" | "club" | "juice" | "starters" | "salads" | "sauces" | "plates">("all");
+  const [searchQuery, setSearchQuery] = useState("");
+  const [showSuggestions, setShowSuggestions] = useState(false);
+  const [sortBy, setSortBy] = useState<"popularity" | "priceLow" | "priceHigh">("popularity");
+  const [favorites, setFavorites] = useState<string[]>([]);
+  const [justAddedId, setJustAddedId] = useState<string | null>(null);
 
-  const reviews = [
-    {
-      avatar: "RA",
-      name: "Rami Al-Assaf",
-      titleKey: "crit_label",
-      text: locale === "en" 
-        ? '"I\'ve had shawarma in Beirut, Dubai, and Istanbul, but the flame-seared crust at Shawarma b\'Kanz is on another level. The chicken is incredibly juicy, and the garlic paste is silky-smooth perfection!"'
-        : '"لقد تذوقت الشاورما في بيروت ودبي وإسطنبول، لكن قشرة اللحم المحمرة على الصاج في شاورما بي كانز في مستوى آخر تماماً. اللجاج طري جداً والثومية حريرية مذهلة!"',
-    },
-    {
-      avatar: "SK",
-      name: "Sarah Khan",
-      titleKey: "reviewer_label_2",
-      text: locale === "en"
-        ? '"The Kanz Sub inside that toasted baguette is a masterpiece. The fries are crunchy, the pickle tang is sharp, and the meat has this amazing wood-grilled hickory scent. 10/10!"'
-        : '"سندوتش كنز باجيت عبارة عن تحفة فنية. البطاطس مقرمشة والمخلل لاذع واللحم له رائحة شواء حطب البلوط الطبيعي المذهلة. ١٠/١٠!"',
-    },
-    {
-      avatar: "MD",
-      name: "Michael Diaz",
-      titleKey: "reviewer_label_3",
-      text: locale === "en"
-        ? '"The Spit-Fired Burger is a genius combination. Putting shaved shawarma and secret sauce on top of a beef patty? Absolute heaven. Best late night spot in town."'
-        : '"برجر لهب السيخ فكرة عبقرية. وضع شاورما اللحم المشرحة مع الصوص السري فوق شريحة البرجر البقري؟ قمة اللذة. أفضل مكان للطلبات المتأخرة."',
-    },
+  const searchContainerRef = useRef<HTMLDivElement>(null);
+
+  // Close suggestions on click outside
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (searchContainerRef.current && !searchContainerRef.current.contains(e.target as Node)) {
+        setShowSuggestions(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  const categories = [
+    { id: "all" as const, labelEn: "All", labelAr: "الكل" },
+    { id: "shawarma" as const, labelEn: "Shawarma", labelAr: "شاورما" },
+    { id: "burger" as const, labelEn: "Burgers", labelAr: "البرجر" },
+    { id: "wrap" as const, labelEn: "Wraps", labelAr: "تورتيلا" },
+    { id: "club" as const, labelEn: "Clubs", labelAr: "كلوب" },
+    { id: "juice" as const, labelEn: "Juices & Tea", labelAr: "عصائر وشاي" },
+    { id: "starters" as const, labelEn: "Starters & Fries", labelAr: "مقبلات وبطاطس" },
+    { id: "salads" as const, labelEn: "Salads", labelAr: "سلطات" },
+    { id: "sauces" as const, labelEn: "Sauces", labelAr: "صوص" },
+    { id: "plates" as const, labelEn: "Plates", labelAr: "صحون" }
   ];
 
-  const handleNextReview = () => {
-    setActiveReviewIndex((prev) => (prev + 1) % reviews.length);
+  // Load favorites from localStorage
+  useEffect(() => {
+    const saved = JSON.parse(localStorage.getItem("kanz_favs") || "[]");
+    setFavorites(saved);
+  }, []);
+
+  const toggleFavorite = (id: string, e: React.MouseEvent) => {
+    e.stopPropagation();
+    setFavorites(prev => {
+      const next = prev.includes(id) ? prev.filter(x => x !== id) : [...prev, id];
+      localStorage.setItem("kanz_favs", JSON.stringify(next));
+      return next;
+    });
   };
 
-  const handlePrevReview = () => {
-    setActiveReviewIndex((prev) => (prev - 1 + reviews.length) % reviews.length);
+  // Quick Add handler
+  const handleQuickAdd = (item: MenuItem, e: React.MouseEvent) => {
+    e.stopPropagation();
+
+    const cartItem = {
+      cartId: `${item.id}_default`,
+      id: item.id,
+      nameEn: item.nameEn,
+      nameAr: item.nameAr,
+      sizeNameEn: item.sizes[0]?.labelEn || "Standard",
+      sizeNameAr: item.sizes[0]?.labelAr || "قياسي",
+      spiceNameEn: "Regular",
+      spiceNameAr: "عادي",
+      addons: [],
+      unitPrice: item.price,
+      quantity: 1,
+      image: item.image,
+    };
+
+    addToCart(cartItem);
+    setJustAddedId(item.id);
+    setTimeout(() => {
+      setJustAddedId(null);
+    }, 2000);
   };
+
+  // Suggestions logic
+  const searchMatches = menuItems.filter(item => {
+    const name = locale === "en" ? item.nameEn : item.nameAr;
+    return name.toLowerCase().includes(searchQuery.toLowerCase());
+  });
+
+  // Filter & Sort items
+  const filteredItems = menuItems.filter((item) => {
+    const matchesCategory = activeCategory === "all" || item.category === activeCategory;
+    const itemName = locale === "en" ? item.nameEn : item.nameAr;
+    const itemDesc = locale === "en" ? item.descEn : item.descAr;
+    const matchesSearch =
+      itemName.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      itemDesc.toLowerCase().includes(searchQuery.toLowerCase());
+
+    return matchesCategory && matchesSearch;
+  });
+
+  const sortedItems = [...filteredItems].sort((a, b) => {
+    if (sortBy === "priceLow") return a.price - b.price;
+    if (sortBy === "priceHigh") return b.price - a.price;
+    const scoreA = a.badgeEn ? 2 : 0;
+    const scoreB = b.badgeEn ? 2 : 0;
+    return scoreB - scoreA;
+  });
 
   return (
-    <div className="bg-[#0E0E0E] text-[#FFFFFF] overflow-hidden">
-      
-      {/* Simple, Clean Hero Section */}
-      <section className="relative min-h-[85vh] md:min-h-screen flex items-center justify-center pt-24 pb-12">
-        <div className="w-[90%] max-w-[1200px] mx-auto grid grid-cols-1 lg:grid-cols-12 items-center gap-12 relative z-20">
+    <div className="bg-[#0E0E0E] text-[#FFFFFF] pt-28 pb-20">
+      <div className="w-[95%] max-w-[1200px] mx-auto">
+        
+        {/* Page Header */}
+        <div className="text-center mb-10">
+          <span className="text-xs font-black uppercase tracking-widest text-[#C41218] mb-2 block">
+            {t("menu_subtitle")}
+          </span>
+          <h1 className="text-2xl md:text-4xl font-black uppercase">
+            {t("menu_title")}
+          </h1>
+        </div>
+
+        {/* Filter Controls */}
+        <div className="sticky top-[72px] z-30 bg-[#121212]/95 p-4 rounded-xl border border-white/5 shadow-md mb-10 flex flex-col gap-4">
           
-          {/* Hero Content (Left) */}
-          <div className="lg:col-span-6 flex flex-col text-center lg:text-left rtl:lg:text-right">
-            <div className="mb-6 flex justify-center lg:justify-start">
-              <span className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-[#C41218]/10 border border-[#C41218]/25 text-[#FFD400] text-[11px] font-black uppercase tracking-wider">
-                <Flame className="w-3.5 h-3.5 text-[#C41218]" />
-                <span>{t("hero_badge")}</span>
-              </span>
-            </div>
-            
-            <h1 className="text-4xl sm:text-5xl md:text-[56px] font-black uppercase tracking-tight mb-6 leading-[1.1]">
-              <span className="text-[#C41218] block mb-1">{t("hero_title_accent")}</span>
-              <span className="text-white">{t("hero_title_main")}</span>
-            </h1>
-            
-            <p className="text-xs sm:text-sm text-white/50 max-w-[480px] mx-auto lg:mx-0 mb-8 leading-relaxed">
-              {t("hero_desc")}
-            </p>
-            
-            {/* CTA Buttons */}
-            <div className="flex flex-wrap items-center justify-center lg:justify-start gap-4 mb-8">
-              <Link
-                href="/menu"
-                className="px-8 py-3.5 rounded-xl text-xs font-black uppercase tracking-wider text-white bg-gradient-to-r from-[#C41218] to-[#FF7A00] hover:opacity-90 transition-all duration-300"
-              >
-                {t("hero_cta_order")}
-              </Link>
-              <a
-                href="#story"
-                className="px-8 py-3.5 rounded-xl text-xs font-black uppercase tracking-wider text-white border border-white/15 bg-white/5 hover:bg-white hover:text-[#0E0E0E] transition-all duration-300"
-              >
-                {t("hero_cta_explore")}
-              </a>
+          {/* Row 1: Categories and Search */}
+          <div className="flex flex-col lg:flex-row items-center justify-between gap-4 w-full">
+            {/* Category Tabs */}
+            <div className="flex items-center gap-1.5 overflow-x-auto w-full lg:w-auto pb-2 lg:pb-0 scrollbar-none">
+              {categories.map((cat) => {
+                const isActive = activeCategory === cat.id;
+                const label = locale === "en" ? cat.labelEn : cat.labelAr;
+                return (
+                  <button
+                    key={cat.id}
+                    onClick={() => setActiveCategory(cat.id)}
+                    className={`px-4 py-2 rounded-lg text-xs font-bold whitespace-nowrap transition-colors ${
+                      isActive
+                        ? "bg-[#C41218] text-white"
+                        : "bg-[#181818] text-white/50 hover:text-white border border-white/5"
+                    }`}
+                  >
+                    {label}
+                  </button>
+                );
+              })}
             </div>
 
-            {/* Clean Stats Grid */}
-            <div className="flex items-center justify-center lg:justify-start gap-8 border-t border-white/5 pt-8">
-              <div className="flex flex-col">
-                <span className="text-xl md:text-2xl font-black text-[#FFD400]">4.9★</span>
-                <span className="text-[9px] text-white/40 uppercase tracking-widest font-black mt-1">
-                  {t("stat_reviews")}
-                </span>
-              </div>
-              <div className="w-[1px] h-6 bg-white/10" />
-              <div className="flex flex-col">
-                <span className="text-xl md:text-2xl font-black text-[#FF7A00]">{t("stat_spices_val")}</span>
-                <span className="text-[9px] text-white/40 uppercase tracking-widest font-black mt-1">
-                  {t("stat_spices")}
-                </span>
-              </div>
-              <div className="w-[1px] h-6 bg-white/10" />
-              <div className="flex flex-col">
-                <span className="text-xl md:text-2xl font-black text-white">{t("stat_locations_val")}</span>
-                <span className="text-[9px] text-white/40 uppercase tracking-widest font-black mt-1">
-                  {t("stat_locations")}
-                </span>
-              </div>
+            {/* Search Input Box */}
+            <div ref={searchContainerRef} className="relative w-full lg:w-72">
+              <input
+                type="text"
+                placeholder={locale === "en" ? "Search items..." : "ابحث عن صنف..."}
+                value={searchQuery}
+                onFocus={() => setShowSuggestions(true)}
+                onChange={(e) => {
+                  setSearchQuery(e.target.value);
+                  setShowSuggestions(true);
+                }}
+                className="w-full bg-[#181818] border border-white/5 rounded-lg py-2 pl-9 pr-4 text-xs text-white focus:outline-none focus:border-[#C41218] placeholder-white/30"
+                style={{
+                  paddingLeft: isRtl ? "1rem" : "2.25rem",
+                  paddingRight: isRtl ? "2.25rem" : "1rem",
+                }}
+              />
+              <Search
+                className="absolute top-1/2 -translate-y-1/2 w-4 h-4 text-white/30 pointer-events-none"
+                style={{
+                  left: isRtl ? "auto" : "0.75rem",
+                  right: isRtl ? "0.75rem" : "auto",
+                }}
+              />
+
+              {/* Autocomplete Dropdown suggestions */}
+              <AnimatePresence>
+                {showSuggestions && searchQuery.length > 0 && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 5 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: 5 }}
+                    className="absolute left-0 right-0 mt-1 bg-[#181818] border border-white/10 rounded-lg overflow-hidden shadow-xl z-40 max-h-[180px] overflow-y-auto scrollbar-none"
+                  >
+                    {searchMatches.length === 0 ? (
+                      <div className="p-3 text-[11px] text-white/30 text-center">{locale === "en" ? "No matches" : "لا توجد نتائج"}</div>
+                    ) : (
+                      searchMatches.map(item => (
+                        <button
+                          key={item.id}
+                          onClick={() => {
+                            setSearchQuery(locale === "en" ? item.nameEn : item.nameAr);
+                            setShowSuggestions(false);
+                          }}
+                          className="w-full text-left rtl:text-right px-4 py-2 text-[11px] text-white/70 hover:bg-white/5 hover:text-white transition-colors border-b border-white/5 last:border-0 flex justify-between items-center"
+                        >
+                          <span>{locale === "en" ? item.nameEn : item.nameAr}</span>
+                          <span className="text-[10px] text-[#FFD400]">{item.price.toFixed(2)} AED</span>
+                        </button>
+                      ))
+                    )}
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </div>
           </div>
 
-          {/* Simple Shawarma Preview (Right) */}
-          <div className="lg:col-span-6 flex items-center justify-center relative">
-            <div className="relative w-full max-w-[380px] aspect-square flex items-center justify-center">
+          {/* Row 2: Sort Selection controls */}
+          <div className="flex items-center justify-between border-t border-white/5 pt-3 text-xs text-white/40">
+            <span>{sortedItems.length} {locale === "en" ? "Items" : "صنف"}</span>
+            <div className="flex items-center gap-1.5">
+              <ArrowUpDown className="w-3.5 h-3.5" />
+              <select
+                value={sortBy}
+                onChange={(e: any) => setSortBy(e.target.value)}
+                className="bg-transparent border-0 text-white font-bold cursor-pointer focus:outline-none pr-5 text-xs"
+              >
+                <option value="popularity" className="bg-[#121212]">{locale === "en" ? "Popularity" : "الأكثر مبيعاً"}</option>
+                <option value="priceLow" className="bg-[#121212]">{locale === "en" ? "Price: Low to High" : "السعر: من الأقل للأعلى"}</option>
+                <option value="priceHigh" className="bg-[#121212]">{locale === "en" ? "Price: High to Low" : "السعر: من الأعلى للأقل"}</option>
+              </select>
+            </div>
+          </div>
+
+        </div>
+
+        {/* Menu Grid */}
+        {sortedItems.length === 0 ? (
+          <div className="text-center py-20 bg-[#181818] rounded-xl border border-white/5">
+            <p className="text-xs text-white/40">
+              {locale === "en"
+                ? "No items found."
+                : "لم نجد أي صنف يطابق البحث."}
+            </p>
+          </div>
+        ) : (
+          <motion.div
+            layout
+            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"
+          >
+            {sortedItems.map((item) => {
+              const name = locale === "en" ? item.nameEn : item.nameAr;
+              const desc = locale === "en" ? item.descEn : item.descAr;
+              const badge = locale === "en" ? item.badgeEn : item.badgeAr;
               
-              {/* Outer decorative ring */}
-              <div className="absolute inset-0 border border-white/5 rounded-full" />
-              <div className="absolute inset-4 border border-dashed border-white/5 rounded-full" />
+              const isSpicy = item.descEn.toLowerCase().includes("spicy") || 
+                              item.descEn.toLowerCase().includes("chili") ||
+                              item.id.includes("zinger") ||
+                              item.id.includes("mathafi");
+              const isFav = favorites.includes(item.id);
+              const isAdded = justAddedId === item.id;
 
-              {/* Sizzling food image (static floating wrapper) */}
-              <div className="relative w-[80%] h-[80%] rounded-full overflow-hidden border-2 border-white/5 shadow-2xl shadow-black/80 bg-black/40">
-                <img
-                  src="/assets/hero_shawarma.png"
-                  alt="Sizzling Shawarma Wrap"
-                  className="w-full h-full object-cover"
-                />
-              </div>
+              return (
+                <div
+                  key={item.id}
+                  onClick={() => openCustomizer(item.id)}
+                  className="bg-[#181818] rounded-xl border border-white/5 overflow-hidden flex flex-col hover:border-[#C41218]/30 transition-all duration-200 cursor-pointer"
+                >
+                  {/* Photo area */}
+                  <div className="relative h-40 overflow-hidden bg-black/10">
+                    <img
+                      src={item.image}
+                      alt={name}
+                      className="w-full h-full object-cover"
+                    />
+                    
+                    {/* Badge */}
+                    {badge && (
+                      <span className={`absolute top-3 bg-[#C41218] text-white text-[8px] font-black px-2 py-0.5 rounded uppercase ${
+                        isRtl ? "right-3" : "left-3"
+                      }`}>
+                        {badge}
+                      </span>
+                    )}
 
-            </div>
-          </div>
-        </div>
-      </section>
+                    {/* Favorite Heart Toggle */}
+                    <button
+                      onClick={(e) => toggleFavorite(item.id, e)}
+                      className={`absolute top-3 w-7 h-7 rounded-full bg-black/60 backdrop-blur-sm border border-white/10 flex items-center justify-center transition-transform ${
+                        isRtl ? "left-3" : "right-3"
+                      } hover:scale-105`}
+                    >
+                      <Heart className={`w-3.5 h-3.5 ${isFav ? "text-[#C41218] fill-[#C41218]" : "text-white"}`} />
+                    </button>
 
-      {/* Brand Story */}
-      <section id="story" className="py-20 bg-[#121212]/40 relative border-t border-white/5">
-        <div className="w-[90%] max-w-[1200px] mx-auto">
-          <div className="text-center mb-16">
-            <span className="text-xs font-black tracking-widest text-[#C41218] uppercase mb-2 block">
-              {t("story_subtitle")}
-            </span>
-            <h2 className="text-2xl md:text-4xl font-black uppercase tracking-tight text-white mb-4">
-              {t("story_title")}
-            </h2>
-            <p className="max-w-[480px] mx-auto text-white/50 text-xs leading-relaxed">
-              {t("story_desc")}
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {/* Feature 1 */}
-            <div className="bg-[#181818] p-8 rounded-2xl border border-white/5 flex flex-col items-center text-center">
-              <div className="w-12 h-12 rounded-xl bg-[#C41218]/10 text-[#C41218] flex items-center justify-center mb-5">
-                <Flame className="w-5 h-5" />
-              </div>
-              <h4 className="text-sm font-bold mb-2 text-white">{t("story_feat1_title")}</h4>
-              <p className="text-xs text-white/45 leading-relaxed">{t("story_feat1_desc")}</p>
-            </div>
-
-            {/* Feature 2 */}
-            <div className="bg-[#181818] p-8 rounded-2xl border border-white/5 flex flex-col items-center text-center">
-              <div className="w-12 h-12 rounded-xl bg-[#C41218]/10 text-[#C41218] flex items-center justify-center mb-5">
-                <Sparkles className="w-5 h-5" />
-              </div>
-              <h4 className="text-sm font-bold mb-2 text-white">{t("story_feat2_title")}</h4>
-              <p className="text-xs text-white/45 leading-relaxed">{t("story_feat2_desc")}</p>
-            </div>
-
-            {/* Feature 3 */}
-            <div className="bg-[#181818] p-8 rounded-2xl border border-white/5 flex flex-col items-center text-center">
-              <div className="w-12 h-12 rounded-xl bg-[#C41218]/10 text-[#C41218] flex items-center justify-center mb-5">
-                <Compass className="w-5 h-5" />
-              </div>
-              <h4 className="text-sm font-bold mb-2 text-white">{t("story_feat3_title")}</h4>
-              <p className="text-xs text-white/45 leading-relaxed">{t("story_feat3_desc")}</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Simplified interactive Spit Experience */}
-      <SpitExperience />
-
-      {/* Simplified Testimonials */}
-      <section id="testimonials" className="py-20 bg-[#121212] border-t border-white/5">
-        <div className="w-[90%] max-w-[1200px] mx-auto">
-          
-          <div className="text-center mb-12">
-            <span className="text-xs font-black tracking-widest text-[#C41218] uppercase mb-2 block">
-              {t("reviews_subtitle")}
-            </span>
-            <h2 className="text-2xl md:text-4xl font-black uppercase tracking-tight text-white mb-4">
-              {t("reviews_title")}
-            </h2>
-          </div>
-
-          <div className="max-w-[700px] mx-auto relative px-8">
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={activeReviewIndex}
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.2 }}
-                className="w-full bg-[#181818] p-8 md:p-10 rounded-2xl border border-white/5 text-center flex flex-col items-center justify-center shadow-lg relative"
-              >
-                <div className="flex items-center gap-1 text-[#FFD400] mb-4">
-                  {[...Array(5)].map((_, i) => (
-                    <Star key={i} className="w-4 h-4 fill-current" />
-                  ))}
-                </div>
-
-                <p className="text-xs md:text-sm font-medium italic text-white/80 leading-relaxed mb-6 max-w-[560px]">
-                  {reviews[activeReviewIndex].text}
-                </p>
-
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-xl bg-gradient-to-r from-[#C41218] to-[#FF7A00] text-white font-extrabold flex items-center justify-center">
-                    {reviews[activeReviewIndex].avatar}
+                    {/* Spicy Indicator */}
+                    {isSpicy && (
+                      <span className={`absolute bottom-3 w-6 h-6 rounded bg-[#C41218]/90 border border-[#C41218] flex items-center justify-center ${
+                        isRtl ? "left-3" : "right-3"
+                      }`}>
+                        <Flame className="w-3.5 h-3.5 text-white" />
+                      </span>
+                    )}
                   </div>
-                  <div className="text-left rtl:text-right">
-                    <h4 className="text-xs font-bold text-white">{reviews[activeReviewIndex].name}</h4>
-                    <span className="text-[9px] text-white/40 font-bold uppercase">{t(reviews[activeReviewIndex].titleKey)}</span>
+
+                  {/* Body Content */}
+                  <div className="p-5 flex flex-col flex-grow">
+                    <h3 className="text-sm font-black text-white mb-1.5 leading-snug">
+                      {name}
+                    </h3>
+                    <p className="text-[11px] text-white/50 leading-relaxed mb-4 flex-grow line-clamp-2">
+                      {desc}
+                    </p>
+
+                    {/* Price and Buttons */}
+                    <div className="flex items-center justify-between mt-auto pt-3 border-t border-white/5">
+                      <span className="text-sm font-black text-[#FFD400]">
+                        {item.price.toFixed(2)} <span className="text-[10px] text-white/40 font-normal">{locale === "en" ? "AED" : "درهم"}</span>
+                      </span>
+                      
+                      {/* Quick Add Button */}
+                      <button
+                        onClick={(e) => handleQuickAdd(item, e)}
+                        className={`w-8 h-8 rounded-lg flex items-center justify-center transition-colors ${
+                          isAdded
+                            ? "bg-green-600 text-white"
+                            : "bg-[#121212] hover:bg-[#C41218] text-white border border-white/5"
+                        }`}
+                      >
+                        {isAdded ? <Check className="w-4 h-4" /> : <Plus className="w-4 h-4" />}
+                      </button>
+                    </div>
                   </div>
                 </div>
-              </motion.div>
-            </AnimatePresence>
-
-            {/* Slider arrows */}
-            <button
-              onClick={handlePrevReview}
-              className={`absolute top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-white/5 border border-white/10 hover:bg-[#C41218] hover:border-transparent flex items-center justify-center text-white transition-all ${
-                isRtl ? "right-[-10px]" : "left-[-10px]"
-              }`}
-            >
-              <ChevronLeft className="w-4 h-4" />
-            </button>
-            <button
-              onClick={handleNextReview}
-              className={`absolute top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-white/5 border border-white/10 hover:bg-[#C41218] hover:border-transparent flex items-center justify-center text-white transition-all ${
-                isRtl ? "left-[-10px]" : "right-[-10px]"
-              }`}
-            >
-              <ChevronRight className="w-4 h-4" />
-            </button>
-          </div>
-
-        </div>
-      </section>
-
+              );
+            })}
+          </motion.div>
+        )}
+      </div>
     </div>
   );
 }

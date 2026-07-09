@@ -772,6 +772,8 @@ interface CartContextProps {
   dbMenuItems: MenuItem[];
   updateProductImage: (productId: string, base64Data: string) => void;
   resetProductImage: (productId: string) => void;
+  searchQuery: string;
+  setSearchQuery: (query: string) => void;
 }
 
 const CartContext = createContext<CartContextProps | undefined>(undefined);
@@ -784,6 +786,7 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [customizerItem, setCustomizerItem] = useState<MenuItem | null>(null);
   const [isSuccessOpen, setIsSuccessOpen] = useState(false);
   const [successStep, setSuccessStep] = useState(1);
+  const [searchQuery, setSearchQuery] = useState("");
 
   const [couponCode, setCouponCode] = useState("");
   const [discountPercent, setDiscountPercent] = useState(0);
@@ -996,7 +999,9 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
       checkoutDetails,
       dbMenuItems,
       updateProductImage,
-      resetProductImage
+      resetProductImage,
+      searchQuery,
+      setSearchQuery
     }}>
       {children}
     </CartContext.Provider>

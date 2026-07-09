@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { useCart, AddonOption, MenuItem } from "@/context/CartContext";
+import { useCart, AddonOption } from "@/context/CartContext";
 import { useLanguage } from "@/context/LanguageContext";
 import { X, Check, Flame, ShoppingBag, Plus } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -122,7 +122,7 @@ export const CustomizerModal: React.FC = () => {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={closeCustomizer}
-            className="absolute inset-0 bg-black/70 backdrop-blur-sm"
+            className="absolute inset-0 bg-black/60 backdrop-blur-sm"
           />
 
           {/* Slide-out Panel Drawer */}
@@ -131,21 +131,21 @@ export const CustomizerModal: React.FC = () => {
             animate={{ x: 0 }}
             exit={{ x: isRtl ? "-100%" : "100%" }}
             transition={{ type: "tween", duration: 0.3 }}
-            className={`relative bg-[#121212] border-t lg:border-t-0 border-white/5 w-full sm:w-[420px] h-full overflow-hidden shadow-2xl z-10 flex flex-col text-[#FFFFFF] ${
+            className={`relative bg-white border-t lg:border-t-0 border-neutral-200 w-full sm:w-[420px] h-full overflow-hidden shadow-2xl z-10 flex flex-col text-[#1A1A1A] ${
               isRtl ? "left-0 border-r" : "right-0 border-l"
             }`}
           >
             {/* Header Area */}
-            <div className="p-5 border-b border-white/5 flex items-center justify-between">
+            <div className="p-5 border-b border-neutral-200 flex items-center justify-between">
               <div>
-                <h3 className="text-base font-black tracking-tight">{name}</h3>
-                <p className="text-[10px] text-white/40 leading-tight mt-1">{desc}</p>
+                <h3 className="text-sm font-black tracking-tight text-neutral-850">{name}</h3>
+                <p className="text-[10px] text-neutral-500 leading-tight mt-1">{desc}</p>
               </div>
               <button
                 onClick={closeCustomizer}
-                className="w-8 h-8 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white/70 hover:text-white transition-colors"
+                className="w-8 h-8 rounded-full bg-neutral-100 border border-neutral-200 flex items-center justify-center text-neutral-600 hover:text-[#C41218] transition-colors"
               >
-                <X className="w-4.5 h-4.5" />
+                <X className="w-4 h-4" />
               </button>
             </div>
 
@@ -155,7 +155,7 @@ export const CustomizerModal: React.FC = () => {
               {/* Sizes Group */}
               {customizerItem.sizes.length > 0 && (
                 <div className="space-y-2">
-                  <h4 className="text-xs font-bold tracking-wider text-white/40 uppercase">
+                  <h4 className="text-[10px] font-black tracking-wider text-neutral-400 uppercase">
                     {t("modal_size")}
                   </h4>
                   <div className="grid grid-cols-1 gap-1.5">
@@ -166,15 +166,15 @@ export const CustomizerModal: React.FC = () => {
                         <button
                           key={idx}
                           onClick={() => setSelectedSizeIndex(idx)}
-                          className={`flex items-center justify-between p-3.5 rounded-xl border text-xs font-bold transition-colors ${
+                          className={`flex items-center justify-between p-3.5 rounded-lg border text-xs font-bold transition-all ${
                             isSelected
-                              ? "border-[#C41218] bg-[#C41218]/5 text-white"
-                              : "border-white/5 bg-[#181818] text-white/60 hover:text-white"
+                              ? "border-[#C41218] bg-[#C41218]/5 text-[#C41218]"
+                              : "border-neutral-200/80 bg-neutral-50 text-neutral-700 hover:bg-neutral-100"
                           }`}
                         >
                           <span>{sizeLabel}</span>
                           {size.priceModifier > 0 && (
-                            <span className="text-[#FFD400]">
+                            <span className="text-[#C41218]">
                               +{size.priceModifier.toFixed(2)} {locale === "en" ? "AED" : "درهم"}
                             </span>
                           )}
@@ -188,7 +188,7 @@ export const CustomizerModal: React.FC = () => {
               {/* Bread Selection Group (Only for Wraps and Shawarma) */}
               {(customizerItem.category === "shawarma" || customizerItem.category === "wrap") && (
                 <div className="space-y-2">
-                  <h4 className="text-xs font-bold tracking-wider text-white/40 uppercase">
+                  <h4 className="text-[10px] font-black tracking-wider text-neutral-400 uppercase">
                     {locale === "en" ? "Select Bread" : "اختر الخبز"}
                   </h4>
                   <div className="grid grid-cols-1 gap-1.5">
@@ -199,15 +199,15 @@ export const CustomizerModal: React.FC = () => {
                         <button
                           key={bread.id}
                           onClick={() => setSelectedBreadIndex(idx)}
-                          className={`flex items-center justify-between p-3.5 rounded-xl border text-xs font-bold transition-colors ${
+                          className={`flex items-center justify-between p-3.5 rounded-lg border text-xs font-bold transition-all ${
                             isSelected
-                              ? "border-[#C41218] bg-[#C41218]/5 text-white"
-                              : "border-white/5 bg-[#181818] text-white/60 hover:text-white"
+                              ? "border-[#C41218] bg-[#C41218]/5 text-[#C41218]"
+                              : "border-neutral-200/80 bg-neutral-50 text-neutral-700 hover:bg-neutral-100"
                           }`}
                         >
                           <span>{breadLabel}</span>
                           {bread.price > 0 && (
-                            <span className="text-[#FFD400]">
+                            <span className="text-[#C41218]">
                               +{bread.price.toFixed(2)} {locale === "en" ? "AED" : "درهم"}
                             </span>
                           )}
@@ -221,7 +221,7 @@ export const CustomizerModal: React.FC = () => {
               {/* Spice Level Group (Except Drinks and Sauces) */}
               {customizerItem.category !== "juice" && customizerItem.category !== "sauces" && (
                 <div className="space-y-2">
-                  <h4 className="text-xs font-bold tracking-wider text-white/40 uppercase">
+                  <h4 className="text-[10px] font-black tracking-wider text-neutral-400 uppercase">
                     {t("modal_spice")}
                   </h4>
                   <div className="grid grid-cols-3 gap-2">
@@ -232,10 +232,10 @@ export const CustomizerModal: React.FC = () => {
                         <button
                           key={spice}
                           onClick={() => setSelectedSpice(spice)}
-                          className={`py-2.5 rounded-lg border text-xs font-bold text-center transition-colors relative ${
+                          className={`py-2.5 rounded-lg border text-xs font-bold text-center transition-all relative ${
                             isSelected
-                              ? "border-[#C41218] bg-[#C41218]/5 text-white"
-                              : "border-white/5 bg-[#181818] text-white/60 hover:text-white"
+                              ? "border-[#C41218] bg-[#C41218]/5 text-[#C41218]"
+                              : "border-neutral-200/80 bg-neutral-50 text-neutral-700 hover:bg-neutral-100"
                           }`}
                         >
                           {spice === "spicy" && (
@@ -252,7 +252,7 @@ export const CustomizerModal: React.FC = () => {
               {/* Addons Group */}
               {customizerItem.addons.length > 0 && (
                 <div className="space-y-2">
-                  <h4 className="text-xs font-bold tracking-wider text-white/40 uppercase">
+                  <h4 className="text-[10px] font-black tracking-wider text-neutral-400 uppercase">
                     {t("modal_addons")}
                   </h4>
                   <div className="grid grid-cols-1 gap-1.5">
@@ -265,23 +265,23 @@ export const CustomizerModal: React.FC = () => {
                         <button
                           key={idx}
                           onClick={() => handleAddonToggle(addon)}
-                          className={`flex items-center justify-between p-3.5 rounded-xl border text-xs font-bold transition-colors ${
+                          className={`flex items-center justify-between p-3.5 rounded-lg border text-xs font-bold transition-all ${
                             isSelected
-                              ? "border-[#C41218] bg-[#C41218]/5 text-white"
-                              : "border-white/5 bg-[#181818] text-white/60 hover:text-white"
+                              ? "border-[#C41218] bg-[#C41218]/5 text-[#C41218]"
+                              : "border-neutral-200/80 bg-neutral-50 text-neutral-700 hover:bg-neutral-100"
                           }`}
                         >
                           <span className="flex items-center gap-2">
                             <span
-                              className={`w-4.5 h-4.5 rounded flex items-center justify-center border transition-all ${
-                                isSelected ? "border-[#C41218] bg-[#C41218]" : "border-white/20"
+                              className={`w-4 h-4 rounded flex items-center justify-center border transition-all ${
+                                isSelected ? "border-[#C41218] bg-[#C41218]" : "border-neutral-300 bg-white"
                               }`}
                             >
-                              {isSelected && <Check className="w-3 h-3 text-white" />}
+                              {isSelected && <Check className="w-2.5 h-2.5 text-white" />}
                             </span>
                             <span>{addonLabel}</span>
                           </span>
-                          <span className="text-[#FFD400] font-black">
+                          <span className="text-[#C41218]">
                             +{addon.price.toFixed(2)} {locale === "en" ? "AED" : "درهم"}
                           </span>
                         </button>
@@ -293,21 +293,21 @@ export const CustomizerModal: React.FC = () => {
 
               {/* Related Products Section */}
               {customizerItem.category !== "juice" && (
-                <div className="space-y-3 pt-3 border-t border-white/5">
-                  <h4 className="text-xs font-bold tracking-wider text-white/40 uppercase">
+                <div className="space-y-3 pt-3 border-t border-neutral-200">
+                  <h4 className="text-[10px] font-black tracking-wider text-neutral-400 uppercase">
                     {locale === "en" ? "Pair it with Juice" : "العصائر الموصى بها"}
                   </h4>
-                  <div className="bg-[#181818] border border-white/5 rounded-xl p-3.5 flex items-center gap-3">
+                  <div className="bg-neutral-50 border border-neutral-200 rounded-lg p-3.5 flex items-center gap-3">
                     <div className="flex-grow">
-                      <h5 className="text-xs font-bold">{locale === "en" ? "Pomegranate Juice" : "عصير رمان طازج"}</h5>
-                      <span className="text-xs font-black text-[#FFD400] mt-0.5 block">6.00 {locale === "en" ? "AED" : "درهم"}</span>
+                      <h5 className="text-xs font-bold text-neutral-800">{locale === "en" ? "Pomegranate Juice" : "عصير رمان طازج"}</h5>
+                      <span className="text-xs font-black text-[#C41218] mt-0.5 block">6.00 {locale === "en" ? "AED" : "درهم"}</span>
                     </div>
                     <button
                       onClick={addRelatedItem}
-                      className="w-8 h-8 rounded-lg bg-[#C41218] flex items-center justify-center text-white transition-colors"
+                      className="w-7 h-7 rounded bg-[#C41218] flex items-center justify-center text-white hover:bg-[#FF7A00] transition-colors"
                       title="Add Drink to Cart"
                     >
-                      <Plus className="w-4 h-4" />
+                      <Plus className="w-3.5 h-3.5" />
                     </button>
                   </div>
                 </div>
@@ -316,18 +316,18 @@ export const CustomizerModal: React.FC = () => {
             </div>
 
             {/* Footer Calculator & Add Button */}
-            <div className="absolute bottom-0 left-0 right-0 p-5 border-t border-white/5 bg-[#181818] flex items-center justify-between z-20">
+            <div className="absolute bottom-0 left-0 right-0 p-5 border-t border-neutral-200 bg-neutral-50 flex items-center justify-between z-20">
               <div>
-                <span className="text-[10px] text-white/40 uppercase font-semibold">
+                <span className="text-[9px] text-neutral-400 uppercase font-semibold">
                   {t("modal_total")}
                 </span>
-                <span className="text-xl font-black text-[#FFD400] block">
-                  {totalPrice.toFixed(2)} <span className="text-[10px] text-white/40 font-normal">{locale === "en" ? "AED" : "درهم"}</span>
+                <span className="text-lg font-black text-[#C41218] block">
+                  {totalPrice.toFixed(2)} <span className="text-[10px] text-neutral-500 font-normal">{locale === "en" ? "AED" : "درهم"}</span>
                 </span>
               </div>
               <button
                 onClick={handleAdd}
-                className="px-6 py-3 rounded-lg font-black text-white text-xs uppercase tracking-wider bg-gradient-to-r from-[#C41218] to-[#FF7A00] transition-all transform active:scale-95 flex items-center gap-2"
+                className="px-5 py-3 rounded-lg font-black text-white text-xs uppercase tracking-wider bg-[#C41218] hover:bg-[#FF7A00] transition-colors flex items-center gap-1.5 shadow-md shadow-[#C41218]/10"
               >
                 <ShoppingBag className="w-4 h-4" />
                 <span>{t("modal_add_btn")}</span>

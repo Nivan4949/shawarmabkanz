@@ -11,19 +11,19 @@
   --color-gold-primary: #FFD400;
   --color-gold-dark: #D4B000;
   
-  --color-charcoal: #1C0204;
-  --color-charcoal-light: #240407;
-  --color-charcoal-card: #2C0609;
-  --color-cream: #FFFFFF;
+  --color-charcoal: #F5F6F8;
+  --color-charcoal-light: #FFFFFF;
+  --color-charcoal-card: #FFFFFF;
+  --color-cream: #1A1A1A;
   --color-white: #FFFFFF;
-  --color-gray-dark: #1E1E1E;
-  --color-gray-light: #BBBBBB;
+  --color-gray-dark: #FFFFFF;
+  --color-gray-light: #666666;
   
   /* Gradients */
   --gradient-fire: linear-gradient(135deg, var(--color-red-primary) 0%, var(--color-orange-spit) 100%);
   --gradient-gold: linear-gradient(135deg, var(--color-gold-primary) 0%, var(--color-orange-spit) 100%);
   --gradient-dark: linear-gradient(180deg, var(--color-charcoal) 0%, var(--color-charcoal-light) 100%);
-  --gradient-glow: radial-gradient(circle, rgba(196, 18, 24, 0.12) 0%, rgba(0, 0, 0, 0) 70%);
+  --gradient-glow: radial-gradient(circle, rgba(196, 18, 24, 0.04) 0%, rgba(0, 0, 0, 0) 70%);
 
   /* Layout */
   --max-width: 1200px;
@@ -33,11 +33,11 @@
   --border-radius-md: 16px;
   --border-radius-lg: 24px;
   --transition-smooth: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-  --box-shadow-card: 0 4px 20px rgba(0, 0, 0, 0.4);
+  --box-shadow-card: 0 2px 12px rgba(0, 0, 0, 0.04);
   
   /* Glassmorphism */
-  --glass-bg: rgba(28, 2, 4, 0.88);
-  --glass-border: rgba(255, 255, 255, 0.05);
+  --glass-bg: #C41218;
+  --glass-border: rgba(0, 0, 0, 0.06);
 
   --font-primary: var(--font-poppins), sans-serif;
 }
@@ -107,28 +107,6 @@ ul {
   list-style: none;
 }
 
-/* Background Glow Effects */
-.bg-glow {
-  position: absolute;
-  width: 500px;
-  height: 500px;
-  border-radius: 50%;
-  background: var(--gradient-glow);
-  z-index: -1;
-  pointer-events: none;
-  filter: blur(100px);
-}
-
-.bg-glow-1 {
-  top: 15%;
-  right: -250px;
-}
-
-.bg-glow-2 {
-  top: 60%;
-  left: -250px;
-}
-
 /* Custom Scrollbar */
 ::-webkit-scrollbar {
   width: 6px;
@@ -139,7 +117,7 @@ ul {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--color-charcoal-card);
+  background: #E4E7EC;
   border: 1px solid var(--glass-border);
   border-radius: 3px;
 }

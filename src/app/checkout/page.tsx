@@ -46,7 +46,7 @@ export default function CheckoutPage() {
   // Redirect if cart is empty
   useEffect(() => {
     if (cart.length === 0) {
-      router.push("/menu");
+      router.push("/");
     }
   }, [cart, router]);
 
@@ -100,10 +100,10 @@ export default function CheckoutPage() {
   if (cart.length === 0) return null;
 
   return (
-    <div className="bg-[#0E0E0E] text-[#FFFFFF] pt-28 pb-20">
+    <div className="bg-[#F5F6F8] text-[#1A1A1A] pt-28 pb-20 min-h-screen">
       <div className="w-[90%] max-w-[1200px] mx-auto">
         {/* Back Link */}
-        <Link href="/menu" className="inline-flex items-center gap-2 text-xs text-white/50 hover:text-[#FFD400] transition-colors mb-8">
+        <Link href="/" className="inline-flex items-center gap-2 text-xs text-neutral-500 hover:text-[#C41218] transition-colors mb-8">
           <ArrowLeft className="w-4 h-4" />
           <span>{locale === "en" ? "Back to Feast Menu" : "العودة لقائمة الطعام"}</span>
         </Link>
@@ -113,7 +113,7 @@ export default function CheckoutPage() {
           <span className="text-xs font-black uppercase tracking-widest text-[#C41218] mb-1 block">
             {locale === "en" ? "Confirm Order" : "تأكيد الطلب"}
           </span>
-          <h1 className="text-2xl md:text-4xl font-black uppercase">
+          <h1 className="text-2xl md:text-4xl font-black uppercase text-neutral-800">
             {locale === "en" ? "Complete Your Feast" : "إتمام وليمتك"}
           </h1>
         </div>
@@ -125,49 +125,49 @@ export default function CheckoutPage() {
           <div className="lg:col-span-7 space-y-6">
             
             {/* Customer info card */}
-            <div className="bg-[#181818] border border-white/5 p-5 rounded-xl space-y-4">
-              <h3 className="text-sm font-bold text-[#FFD400]">
+            <div className="bg-white border border-neutral-200/60 p-5 rounded-xl space-y-4 shadow-sm">
+              <h3 className="text-sm font-bold text-[#C41218]">
                 {locale === "en" ? "1. Customer Details" : "١. البيانات الشخصية"}
               </h3>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="flex flex-col gap-1.5">
-                  <label className="text-[10px] text-white/50 uppercase font-bold">{locale === "en" ? "Name" : "الاسم"}</label>
+                  <label className="text-[10px] text-neutral-400 uppercase font-bold">{locale === "en" ? "Name" : "الاسم"}</label>
                   <input
                     type="text"
                     required
                     value={customerName}
                     onChange={(e) => setCustomerName(e.target.value)}
                     placeholder={locale === "en" ? "Enter your name" : "أدخل اسمك"}
-                    className="bg-[#121212] border border-white/5 rounded-lg px-4 py-2.5 text-xs text-white focus:outline-none focus:border-[#C41218]"
+                    className="bg-neutral-50 border border-neutral-200 rounded-lg px-4 py-2.5 text-xs text-neutral-800 focus:outline-none focus:border-[#C41218]"
                   />
                 </div>
                 <div className="flex flex-col gap-1.5">
-                  <label className="text-[10px] text-white/50 uppercase font-bold">{locale === "en" ? "Phone" : "الهاتف"}</label>
+                  <label className="text-[10px] text-neutral-400 uppercase font-bold">{locale === "en" ? "Phone" : "الهاتف"}</label>
                   <input
                     type="tel"
                     required
                     value={phone}
                     onChange={(e) => setPhone(e.target.value)}
                     placeholder={locale === "en" ? "+20 100..." : "٠١٠٠..."}
-                    className="bg-[#121212] border border-white/5 rounded-lg px-4 py-2.5 text-xs text-white focus:outline-none focus:border-[#C41218]"
+                    className="bg-neutral-50 border border-neutral-200 rounded-lg px-4 py-2.5 text-xs text-neutral-800 focus:outline-none focus:border-[#C41218]"
                   />
                 </div>
               </div>
               <div className="flex flex-col gap-1.5 pt-2">
-                <label className="text-[10px] text-white/50 uppercase font-bold">{locale === "en" ? "Notes" : "تعليمات خاصة"}</label>
+                <label className="text-[10px] text-neutral-400 uppercase font-bold">{locale === "en" ? "Notes" : "تعليمات خاصة"}</label>
                 <textarea
                   value={notes}
                   onChange={(e) => setNotes(e.target.value)}
                   placeholder={locale === "en" ? "Kitchen instructions..." : "تعليمات خاصة للمطبخ..."}
-                  className="bg-[#121212] border border-white/5 rounded-lg px-4 py-2.5 text-xs text-white focus:outline-none focus:border-[#C41218] min-h-[60px]"
+                  className="bg-neutral-50 border border-neutral-200 rounded-lg px-4 py-2.5 text-xs text-neutral-800 focus:outline-none focus:border-[#C41218] min-h-[60px]"
                 />
               </div>
             </div>
 
             {/* Address Selection (Map Simulation) */}
             {deliveryType === "delivery" && (
-              <div className="bg-[#181818] border border-white/5 p-5 rounded-xl space-y-4">
-                <h3 className="text-sm font-bold text-[#FFD400] flex items-center gap-2">
+              <div className="bg-white border border-neutral-200/60 p-5 rounded-xl space-y-4 shadow-sm">
+                <h3 className="text-sm font-bold text-[#C41218] flex items-center gap-2">
                   <MapPin className="w-5 h-5 text-[#C41218]" />
                   <span>{locale === "en" ? "2. Delivery Location" : "٢. عنوان التوصيل"}</span>
                 </h3>
@@ -176,45 +176,45 @@ export default function CheckoutPage() {
                 <div 
                   ref={mapRef}
                   onClick={handleMapClick}
-                  className="relative h-56 bg-[#121212] rounded-lg border border-white/5 overflow-hidden cursor-crosshair group shadow-inner"
+                  className="relative h-56 bg-neutral-100 rounded-lg border border-neutral-200 overflow-hidden cursor-crosshair group shadow-inner"
                   style={{
-                    backgroundImage: "radial-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px)",
+                    backgroundImage: "radial-gradient(rgba(0, 0, 0, 0.05) 1px, transparent 1px)",
                     backgroundSize: "20px 20px"
                   }}
                 >
                   {/* Grid Lines */}
-                  <div className="absolute inset-x-0 top-1/3 h-[2px] bg-white/5" />
-                  <div className="absolute inset-y-0 left-1/2 w-[2px] bg-white/5" />
+                  <div className="absolute inset-x-0 top-1/3 h-[2px] bg-neutral-200" />
+                  <div className="absolute inset-y-0 left-1/2 w-[2px] bg-neutral-200" />
 
                   {/* Pulsing Pin */}
                   <div 
                     className="absolute -translate-x-1/2 -translate-y-full pointer-events-none"
                     style={{ left: pinX, top: pinY }}
                   >
-                    <MapPin className="w-7 h-7 text-[#C41218] fill-black/30" />
+                    <MapPin className="w-7 h-7 text-[#C41218] fill-[#C41218]/10" />
                   </div>
 
-                  <span className="absolute bottom-2 right-2 px-2 py-0.5 rounded bg-black/60 border border-white/5 text-[8px] text-white/40">
+                  <span className="absolute bottom-2 right-2 px-2 py-0.5 rounded bg-white/80 border border-neutral-200 text-[8px] text-neutral-400 font-bold">
                     GPS TARGETING ACTIVE
                   </span>
                 </div>
 
                 <div className="flex flex-col gap-1.5 pt-1">
-                  <label className="text-[10px] text-white/50 uppercase font-bold">{locale === "en" ? "Address Text" : "العنوان بالتفصيل"}</label>
+                  <label className="text-[10px] text-neutral-400 uppercase font-bold">{locale === "en" ? "Address Text" : "العنوان بالتفصيل"}</label>
                   <input
                     type="text"
                     readOnly
                     value={address}
                     placeholder={locale === "en" ? "Tap on the map above to select your address" : "انقر على الخريطة أعلاه لتحديد عنوانك"}
-                    className="bg-[#121212] border border-white/5 rounded-lg px-4 py-2.5 text-xs text-[#FFD400] font-bold focus:outline-none"
+                    className="bg-neutral-50 border border-neutral-200 rounded-lg px-4 py-2.5 text-xs text-[#C41218] font-bold focus:outline-none"
                   />
                 </div>
               </div>
             )}
 
             {/* Payment Portal */}
-            <div className="bg-[#181818] border border-white/5 p-5 rounded-xl space-y-4">
-              <h3 className="text-sm font-bold text-[#FFD400]">
+            <div className="bg-white border border-neutral-200/60 p-5 rounded-xl space-y-4 shadow-sm">
+              <h3 className="text-sm font-bold text-[#C41218]">
                 {locale === "en" ? "3. Choose Payment Method" : "٣. طريقة الدفع"}
               </h3>
               
@@ -224,8 +224,8 @@ export default function CheckoutPage() {
                   onClick={() => setPaymentMethod("cash")}
                   className={`flex flex-col items-center justify-center p-3 rounded-lg border text-xs font-bold gap-1.5 transition-colors ${
                     paymentMethod === "cash"
-                      ? "border-[#C41218] bg-[#C41218]/5 text-white"
-                      : "border-white/5 bg-[#121212] text-white/50 hover:border-white/20"
+                      ? "border-[#C41218] bg-[#C41218]/5 text-[#C41218]"
+                      : "border-neutral-200 bg-neutral-50 text-neutral-500 hover:bg-neutral-100"
                   }`}
                 >
                   <Landmark className="w-4 h-4" />
@@ -237,8 +237,8 @@ export default function CheckoutPage() {
                   onClick={() => setPaymentMethod("card")}
                   className={`flex flex-col items-center justify-center p-3 rounded-lg border text-xs font-bold gap-1.5 transition-colors ${
                     paymentMethod === "card"
-                      ? "border-[#C41218] bg-[#C41218]/5 text-white"
-                      : "border-white/5 bg-[#121212] text-white/50 hover:border-white/20"
+                      ? "border-[#C41218] bg-[#C41218]/5 text-[#C41218]"
+                      : "border-neutral-200 bg-neutral-50 text-neutral-500 hover:bg-neutral-100"
                   }`}
                 >
                   <CreditCard className="w-4 h-4" />
@@ -253,40 +253,40 @@ export default function CheckoutPage() {
                     initial={{ height: 0, opacity: 0 }}
                     animate={{ height: "auto", opacity: 1 }}
                     exit={{ height: 0, opacity: 0 }}
-                    className="overflow-hidden pt-3 space-y-3 border-t border-white/5"
+                    className="overflow-hidden pt-3 space-y-3 border-t border-neutral-200"
                   >
                     <div className="flex flex-col gap-1">
-                      <label className="text-[9px] text-white/40 uppercase font-black">{locale === "en" ? "Card Number" : "رقم البطاقة"}</label>
+                      <label className="text-[9px] text-neutral-400 uppercase font-black">{locale === "en" ? "Card Number" : "رقم البطاقة"}</label>
                       <input
                         type="text"
                         maxLength={16}
                         value={cardNumber}
                         onChange={(e) => setCardNumber(e.target.value.replace(/\D/g, ""))}
                         placeholder="4000 1234 5678 9010"
-                        className="bg-[#121212] border border-white/5 rounded-lg px-4 py-2 text-xs text-white focus:outline-none focus:border-[#C41218]"
+                        className="bg-neutral-50 border border-neutral-200 rounded-lg px-4 py-2 text-xs text-neutral-800 focus:outline-none focus:border-[#C41218]"
                       />
                     </div>
                     <div className="grid grid-cols-2 gap-3">
                       <div className="flex flex-col gap-1">
-                        <label className="text-[9px] text-white/40 uppercase font-black">Expiry</label>
+                        <label className="text-[9px] text-neutral-400 uppercase font-black">Expiry</label>
                         <input
                           type="text"
                           maxLength={5}
                           value={expiry}
                           onChange={(e) => setExpiry(e.target.value)}
                           placeholder="MM/YY"
-                          className="bg-[#121212] border border-white/5 rounded-lg px-4 py-2 text-xs text-white focus:outline-none focus:border-[#C41218] text-center"
+                          className="bg-neutral-50 border border-neutral-200 rounded-lg px-4 py-2 text-xs text-neutral-850 focus:outline-none focus:border-[#C41218] text-center"
                         />
                       </div>
                       <div className="flex flex-col gap-1">
-                        <label className="text-[9px] text-white/40 uppercase font-black">CVV</label>
+                        <label className="text-[9px] text-neutral-400 uppercase font-black">CVV</label>
                         <input
                           type="password"
                           maxLength={3}
                           value={cvv}
                           onChange={(e) => setCvv(e.target.value.replace(/\D/g, ""))}
                           placeholder="***"
-                          className="bg-[#121212] border border-white/5 rounded-lg px-4 py-2 text-xs text-white focus:outline-none focus:border-[#C41218] text-center"
+                          className="bg-neutral-50 border border-neutral-200 rounded-lg px-4 py-2 text-xs text-neutral-850 focus:outline-none focus:border-[#C41218] text-center"
                         />
                       </div>
                     </div>
@@ -298,8 +298,8 @@ export default function CheckoutPage() {
 
           {/* Right Column: Order Summary */}
           <div className="lg:col-span-5">
-            <div className="bg-[#181818] border border-white/5 p-5 rounded-xl space-y-5 sticky top-24">
-              <h3 className="text-sm font-bold text-[#FFFFFF]">
+            <div className="bg-white border border-neutral-200/60 p-5 rounded-xl space-y-5 sticky top-24 shadow-sm">
+              <h3 className="text-sm font-bold text-neutral-800">
                 {locale === "en" ? "Order Summary" : "ملخص الطلب"}
               </h3>
 
@@ -310,12 +310,12 @@ export default function CheckoutPage() {
                   const size = locale === "en" ? item.sizeNameEn : item.sizeNameAr;
                   const addons = item.addons.map(a => locale === "en" ? a.labelEn : a.labelAr).join(", ");
                   return (
-                    <div key={item.cartId} className="flex gap-2 justify-between items-start text-xs border-b border-white/5 pb-2">
+                    <div key={item.cartId} className="flex gap-2 justify-between items-start text-xs border-b border-neutral-100 pb-2">
                       <div>
-                        <h4 className="font-bold text-white/90">{name} <span className="text-[#FFD400]">x{item.quantity}</span></h4>
-                        <p className="text-[10px] text-white/40 mt-0.5">{size} {addons ? `| +${addons}` : ""}</p>
+                        <h4 className="font-bold text-neutral-800">{name} <span className="text-[#C41218]">x{item.quantity}</span></h4>
+                        <p className="text-[10px] text-neutral-400 mt-0.5">{size} {addons ? `| +${addons}` : ""}</p>
                       </div>
-                      <span className="font-black text-[#FFD400]">
+                      <span className="font-black text-[#C41218]">
                         {(item.unitPrice * item.quantity).toFixed(2)} {locale === "en" ? "AED" : "درهم"}
                       </span>
                     </div>
@@ -325,29 +325,29 @@ export default function CheckoutPage() {
 
               {/* Pricing Math */}
               <div className="space-y-2 text-xs">
-                <div className="flex justify-between text-white/50">
+                <div className="flex justify-between text-neutral-500">
                   <span>{locale === "en" ? "Subtotal" : "المجموع الفرعي"}</span>
                   <span>{subtotal.toFixed(2)} {locale === "en" ? "AED" : "درهم"}</span>
                 </div>
-                <div className="flex justify-between text-white/50">
+                <div className="flex justify-between text-neutral-500">
                   <span>{locale === "en" ? "Tax (14%)" : "الضريبة (١٤٪)"}</span>
                   <span>{tax.toFixed(2)} {locale === "en" ? "AED" : "درهم"}</span>
                 </div>
                 {deliveryType === "delivery" && (
-                  <div className="flex justify-between text-white/50">
+                  <div className="flex justify-between text-neutral-500">
                     <span>{locale === "en" ? "Delivery Fee" : "رسوم التوصيل"}</span>
                     <span>{deliveryFee.toFixed(2)} {locale === "en" ? "AED" : "درهم"}</span>
                   </div>
                 )}
                 {couponCode && (
-                  <div className="flex justify-between text-green-500 font-bold">
+                  <div className="flex justify-between text-green-600 font-bold">
                     <span>Discount ({discountPercent}%)</span>
                     <span>-{discount.toFixed(2)} {locale === "en" ? "AED" : "درهم"}</span>
                   </div>
                 )}
-                <div className="flex justify-between text-sm font-black text-white pt-3 border-t border-white/5">
+                <div className="flex justify-between text-sm font-black text-neutral-800 pt-3 border-t border-neutral-200">
                   <span>{locale === "en" ? "Grand Total" : "المجموع الكلي"}</span>
-                  <span className="text-[#FFD400] text-base font-black">
+                  <span className="text-[#C41218] text-base font-black">
                     {total.toFixed(2)} {locale === "en" ? "AED" : "درهم"}
                   </span>
                 </div>
@@ -356,13 +356,13 @@ export default function CheckoutPage() {
               {/* Checkout Button */}
               <button
                 onClick={handlePlaceOrder}
-                className="w-full py-3.5 rounded-lg bg-[#C41218] hover:bg-[#FF7A00] text-white font-black text-xs uppercase tracking-wider text-center transition-all flex items-center justify-center gap-2 transform active:scale-95"
+                className="w-full py-3.5 rounded-lg bg-[#C41218] hover:bg-[#FF7A00] text-white font-black text-xs uppercase tracking-wider text-center transition-all flex items-center justify-center gap-2 transform active:scale-95 shadow-md shadow-[#C41218]/10"
               >
                 <Flame className="w-4 h-4" />
                 <span>{locale === "en" ? "Place Order" : "تأكيد وإرسال الطلب"}</span>
               </button>
 
-              <div className="flex items-center justify-center gap-1.5 text-[9px] text-white/30 pt-1">
+              <div className="flex items-center justify-center gap-1.5 text-[9px] text-neutral-450 pt-1">
                 <ShieldCheck className="w-3.5 h-3.5 text-green-600" />
                 <span>Secure Checkout Encryption</span>
               </div>

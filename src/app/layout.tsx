@@ -35,7 +35,7 @@ export default function RootLayout({
     <html lang="en" className={`${poppins.variable} ${cairo.variable} h-full antialiased`}>
       <head>
         <link rel="manifest" href="/manifest.json" />
-        <meta name="theme-color" content="#0E0E0E" />
+        <meta name="theme-color" content="#C41218" />
         <link rel="apple-touch-icon" href="/assets/logo.png" />
         <script
           dangerouslySetInnerHTML={{
@@ -51,7 +51,7 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body className="min-h-full flex flex-col bg-[#0E0E0E] text-[#FDFBF7] relative overflow-x-hidden selection:bg-[#C41218] selection:text-white">
+      <body className="min-h-full flex flex-col relative overflow-x-hidden selection:bg-[#C41218] selection:text-white">
         <LanguageProvider>
           <CartProvider>
             {/* Background Glow FX */}

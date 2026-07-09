@@ -40,7 +40,7 @@ export const Navbar: React.FC = () => {
           isShrunk ? "h-14 shadow-md" : "h-16"
         }`}
       >
-        <div className="w-[95%] max-w-[1240px] mx-auto flex items-center justify-between gap-3">
+        <div className="w-[90%] max-w-[1200px] mx-auto flex items-center justify-between gap-3">
           
           {/* Logo Section */}
           <div className="flex items-center gap-3">

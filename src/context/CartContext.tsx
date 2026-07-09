@@ -1,6 +1,6 @@
 "use client";
 
-import React, { createContext, useContext, useState } from "react";
+import React, { createContext, useContext, useState, useEffect } from "react";
 
 export interface SizeOption {
   labelEn: string;
@@ -44,6 +44,7 @@ export interface CartItem {
   image: string;
 }
 
+// Helper: Sets all default menu items with the brand logo to remove AI pictures.
 export const menuItems: MenuItem[] = [
   // SHAWARMA (شاورما)
   {
@@ -54,7 +55,7 @@ export const menuItems: MenuItem[] = [
     descEn: "Classic spit-roasted shawarma wrap with garlic paste and pickles in soft arabic bread.",
     descAr: "شاورما كلاسيكية ملفوفة في خبز عربي صغير مع الثومية والمخلل.",
     price: 6.00,
-    image: "/assets/hero_shawarma.png",
+    image: "/assets/logo.png",
     badgeEn: "Popular",
     badgeAr: "محبوب",
     sizes: [
@@ -74,7 +75,7 @@ export const menuItems: MenuItem[] = [
     descEn: "Large spit-roasted shawarma wrapped in toasted Saj flatbread with double meat and fries.",
     descAr: "رول شاورما كبير في خبز الصاج المحمص مع شرائح دجاج مضاعفة والبطاطس.",
     price: 10.00,
-    image: "/assets/hero_shawarma.png",
+    image: "/assets/logo.png",
     badgeEn: "Best Seller",
     badgeAr: "الأكثر مبيعاً",
     sizes: [
@@ -94,7 +95,7 @@ export const menuItems: MenuItem[] = [
     descEn: "Slices of saj chicken shawarma cut Arabic style, served with fries, garlic sauce, and pickles.",
     descAr: "شاورما دجاج مقطعة عربي، تقدم مع البطاطس، الثومية، والمخلل في علبة.",
     price: 12.00,
-    image: "/assets/hero_shawarma.png",
+    image: "/assets/logo.png",
     sizes: [{ labelEn: "Standard Plate", labelAr: "وجبة قياسية", priceModifier: 0 }],
     addons: [{ labelEn: "Extra Fries", labelAr: "بطاطس إضافية", price: 2.00 }]
   },
@@ -106,7 +107,7 @@ export const menuItems: MenuItem[] = [
     descEn: "Medium platter of Arabic-sliced chicken shawarma, loaded with extra fries, pickles, and garlic dip.",
     descAr: "وجبة شاورما عربي حجم وسط، تقدم مع بطاطس مقرمشة، مخلل، وثومية كانز.",
     price: 17.00,
-    image: "/assets/hero_shawarma.png",
+    image: "/assets/logo.png",
     sizes: [{ labelEn: "Medium Platter", labelAr: "صحن وسط", priceModifier: 0 }],
     addons: [{ labelEn: "Extra Garlic Dip", labelAr: "ثومية إضافية", price: 1.00 }]
   },
@@ -118,7 +119,7 @@ export const menuItems: MenuItem[] = [
     descEn: "Double decker platter of sliced Arabic shawarma wraps, complete with family fries, garlic sauce, and spicy salsa.",
     descAr: "وجبة دبل عائلية من الشاورما المقطعة عربي مع بطاطس عائلية، مخلل، شطة وثومية.",
     price: 20.00,
-    image: "/assets/hero_shawarma.png",
+    image: "/assets/logo.png",
     badgeEn: "Signature",
     badgeAr: "توقيعنا الخاص",
     sizes: [{ labelEn: "Double Deck Box", labelAr: "صندوق دبل", priceModifier: 0 }],
@@ -132,7 +133,7 @@ export const menuItems: MenuItem[] = [
     descEn: "Authentic oven-baked shawarma pie stuffed with juicy roasted meats, mozzarella, and garlic blend.",
     descAr: "فطيرة شاورما مخبوزة بالفرن محشوة بشرائح اللحم، جبن الموزاريلا، وصلصة الثوم.",
     price: 20.00,
-    image: "/assets/hero_shawarma.png",
+    image: "/assets/logo.png",
     badgeEn: "Unique",
     badgeAr: "مميز",
     sizes: [{ labelEn: "Standard Pie", labelAr: "فطيرة قياسية", priceModifier: 0 }],
@@ -146,7 +147,7 @@ export const menuItems: MenuItem[] = [
     descEn: "Freshly cut chicken shawarma strips served cleanly on a plate with hummus, salad, and Saj bread.",
     descAr: "شرائح شاورما دجاج تقدم بصحن مع حمص، سلطة، وخبز صاج دافئ.",
     price: 10.00,
-    image: "/assets/hero_shawarma.png",
+    image: "/assets/logo.png",
     sizes: [{ labelEn: "Plate Portion", labelAr: "وجبة صحن", priceModifier: 0 }],
     addons: [{ labelEn: "Add Extra Hummus", labelAr: "إضافة حمص", price: 2.00 }]
   },
@@ -158,7 +159,7 @@ export const menuItems: MenuItem[] = [
     descEn: "Big chicken wrap served with french fries and a cold beverage of your choice.",
     descAr: "رول شاورما كبير يقدم مع بطاطس مقلية ومشروب غازي بارد.",
     price: 10.00,
-    image: "/assets/hero_shawarma.png",
+    image: "/assets/logo.png",
     sizes: [{ labelEn: "Combo Set", labelAr: "وجبة كومبو كاملة", priceModifier: 0 }],
     addons: [{ labelEn: "Upgrade to Large Fries", labelAr: "ترقية بطاطس كبير", price: 2.00 }]
   },
@@ -170,7 +171,7 @@ export const menuItems: MenuItem[] = [
     descEn: "Toasted samoon bread loaded with shaved shawarma, garlic paste, and mozzarella cheese crust.",
     descAr: "خبز صمون محمص محشو بشاورما الدجاج، ثومية، ومغطى بطبقة موزاريلا مقرمشة.",
     price: 10.00,
-    image: "/assets/hero_shawarma.png",
+    image: "/assets/logo.png",
     sizes: [{ labelEn: "Standard Portion", labelAr: "حجم قياسي", priceModifier: 0 }],
     addons: [{ labelEn: "Double Mozzarella", labelAr: "جبنة دبل", price: 2.00 }]
   },
@@ -182,7 +183,7 @@ export const menuItems: MenuItem[] = [
     descEn: "Triple-decker club sandwich stuffed with chicken shawarma shavings, lettuce, tomatoes, and garlic aioli.",
     descAr: "كلوب سندوتش ثلاثي الطبقات محشو بشاورما الدجاج، خس، طماطم، وصلصة ثوم.",
     price: 10.00,
-    image: "/assets/hero_shawarma.png",
+    image: "/assets/logo.png",
     sizes: [{ labelEn: "Club Portion", labelAr: "كلوب كامل", priceModifier: 0 }],
     addons: [{ labelEn: "Add Egg Slice", labelAr: "إضافة شريحة بيض", price: 1.00 }]
   },
@@ -196,7 +197,7 @@ export const menuItems: MenuItem[] = [
     descEn: "Crispy breaded fish fillet, tartar sauce, cheddar cheese, and pickles on toasted bun.",
     descAr: "فيلي سمك مقرمش، صلصة تارتار، جبن شيدر، ومخلل في خبز البرجر.",
     price: 9.00,
-    image: "/assets/spit_burger.png",
+    image: "/assets/logo.png",
     sizes: [{ labelEn: "Single Fillet", labelAr: "شريحة واحدة", priceModifier: 0 }],
     addons: [{ labelEn: "Extra Tartar Sauce", labelAr: "صلصة تارتار إضافية", price: 1.00 }]
   },
@@ -208,7 +209,7 @@ export const menuItems: MenuItem[] = [
     descEn: "Juicy grilled beef patty, lettuce, tomatoes, onions, cheddar, and our classic burger spread.",
     descAr: "شريحة لحم بقري مشوية، خس، طماطم، بصل، جبن شيدر، وصلصة البرجر.",
     price: 8.00,
-    image: "/assets/spit_burger.png",
+    image: "/assets/logo.png",
     sizes: [
       { labelEn: "Single Patty", labelAr: "شريحة واحدة", priceModifier: 0 },
       { labelEn: "Double Beef Patty", labelAr: "دبل برجر بقري", priceModifier: 3.50 }
@@ -223,7 +224,7 @@ export const menuItems: MenuItem[] = [
     descEn: "Tender grilled chicken patty, shredded lettuce, and classic mayonnaise spread on soft buns.",
     descAr: "برجر دجاج مشوي طري مع خس مقطع وصلصة مايونيز.",
     price: 8.00,
-    image: "/assets/spit_burger.png",
+    image: "/assets/logo.png",
     sizes: [{ labelEn: "Regular size", labelAr: "حجم عادي", priceModifier: 0 }],
     addons: [{ labelEn: "Add Cheddar Slice", labelAr: "إضافة جبنة", price: 1.00 }]
   },
@@ -235,7 +236,7 @@ export const menuItems: MenuItem[] = [
     descEn: "Crispy breaded chicken patty, cheese, and garlic sauce for the perfect crunch.",
     descAr: "شريحة دجاج بالبقسماط مقرمشة مع الجبنة وصلصة الثوم.",
     price: 6.00,
-    image: "/assets/spit_burger.png",
+    image: "/assets/logo.png",
     sizes: [{ labelEn: "Regular", labelAr: "عادي", priceModifier: 0 }],
     addons: [{ labelEn: "Extra Spicy Spread", labelAr: "شطة حارة", price: 1.00 }]
   },
@@ -247,7 +248,7 @@ export const menuItems: MenuItem[] = [
     descEn: "Golden fried shrimp patties, lettuce, and dynamite seafood dressing on toasted buns.",
     descAr: "شريحة روبيان مقلي ذهبي، خس، وصلصة ديناميت حارة.",
     price: 10.00,
-    image: "/assets/spit_burger.png",
+    image: "/assets/logo.png",
     sizes: [{ labelEn: "Shrimp Bun", labelAr: "برجر روبيان", priceModifier: 0 }],
     addons: [{ labelEn: "Extra Dynamite Sauce", labelAr: "صلصة ديناميت إضافية", price: 1.00 }]
   },
@@ -259,7 +260,7 @@ export const menuItems: MenuItem[] = [
     descEn: "Super crispy hot zinger chicken breast, cheese, spicy mayonnaise, and pickles.",
     descAr: "صدر دجاج زنجر مقرمش وحار، مع الجبنة، مايونيز حار، ومخلل.",
     price: 10.00,
-    image: "/assets/spit_burger.png",
+    image: "/assets/logo.png",
     badgeEn: "Spicy Hot",
     badgeAr: "حار نار",
     sizes: [{ labelEn: "Regular Spicy", labelAr: "حار عادي", priceModifier: 0 }],
@@ -273,7 +274,7 @@ export const menuItems: MenuItem[] = [
     descEn: "Giant double-crispy chicken breast stacked with beef bacon, melting cheese, lettuce, and secret spices.",
     descAr: "صدر دجاج دبل مقرمش، شرائح بيكن بقري، جبنة ذائبة، خس، وصلصة بهارات كانز السرية.",
     price: 12.00,
-    image: "/assets/spit_burger.png",
+    image: "/assets/logo.png",
     badgeEn: "Premium Choice",
     badgeAr: "اختيار فاخر",
     sizes: [{ labelEn: "Giant Burger", labelAr: "برجر عملاق", priceModifier: 0 }],
@@ -289,7 +290,7 @@ export const menuItems: MenuItem[] = [
     descEn: "Crispy hot zinger chicken fillet wrapped in a toasted tortilla with fiery sauce, cheese, and lettuce.",
     descAr: "فيليه دجاج زنجر حار ومقرمش في خبز تورتيلا مع صلصة مطافي الحارة والجبن.",
     price: 12.00,
-    image: "/assets/hero_shawarma.png",
+    image: "/assets/logo.png",
     sizes: [{ labelEn: "Regular Wrap", labelAr: "رول عادي", priceModifier: 0 }],
     addons: [{ labelEn: "Extra Spicy Heat", labelAr: "حرارة إضافية", price: 1.00 }]
   },
@@ -301,7 +302,7 @@ export const menuItems: MenuItem[] = [
     descEn: "Breaded crispy fish fillet strips, greens, and cream tartar rolled in soft tortilla.",
     descAr: "أصابع فيليه سمك مقرمشة، خس، وصلصة تارتار كريمية في خبز التورتيلا.",
     price: 10.00,
-    image: "/assets/hero_shawarma.png",
+    image: "/assets/logo.png",
     sizes: [{ labelEn: "Fish Wrap", labelAr: "رول سمك", priceModifier: 0 }],
     addons: []
   },
@@ -313,7 +314,7 @@ export const menuItems: MenuItem[] = [
     descEn: "Grilled chicken slices, lettuce, cheddar, and garlic mayonnaise wrapped to perfection.",
     descAr: "شرائح دجاج مشوية، خس، جبن شيدر، ومايونيز الثوم في خبز التورتيلا.",
     price: 9.00,
-    image: "/assets/hero_shawarma.png",
+    image: "/assets/logo.png",
     sizes: [{ labelEn: "Chicken Wrap", labelAr: "رول دجاج", priceModifier: 0 }],
     addons: [{ labelEn: "Extra Cheese", labelAr: "جبنة إضافية", price: 1.00 }]
   },
@@ -325,7 +326,7 @@ export const menuItems: MenuItem[] = [
     descEn: "Omelette wrap cooked with green peppers, tomatoes, and cheese inside flat toasted tortilla.",
     descAr: "بيض أومليت مع فلفل أخضر وطماطم وجبنة موزاريلا في خبز تورتيلا محمص.",
     price: 10.00,
-    image: "/assets/hero_shawarma.png",
+    image: "/assets/logo.png",
     sizes: [{ labelEn: "Omelette Wrap", labelAr: "رول البيض", priceModifier: 0 }],
     addons: []
   },
@@ -337,7 +338,7 @@ export const menuItems: MenuItem[] = [
     descEn: "Spicy zinger tenders, fresh shredded lettuce, cheese, and spicy dressing.",
     descAr: "قطع دجاج زنجر حارة، خس مقطع، جبنة، وصلصة زنجر الحارة.",
     price: 11.00,
-    image: "/assets/hero_shawarma.png",
+    image: "/assets/logo.png",
     sizes: [{ labelEn: "Zinger Wrap", labelAr: "رول زنجر", priceModifier: 0 }],
     addons: [{ labelEn: "Add Cheese", labelAr: "إضافة جبنة", price: 1.00 }]
   },
@@ -351,7 +352,7 @@ export const menuItems: MenuItem[] = [
     descEn: "Traditional Gulf club sandwich stacked with egg, chicken salad, cheese, and fries.",
     descAr: "كلوب سندوتش عربي تقليدي محشو بالبيض، دجاج، جبنة، ويقدم مع بطاطس.",
     price: 10.00,
-    image: "/assets/spit_burger.png",
+    image: "/assets/logo.png",
     sizes: [{ labelEn: "Double Deck Club", labelAr: "كلوب قطعتين", priceModifier: 0 }],
     addons: [{ labelEn: "Extra Fries Side", labelAr: "بطاطس جانبي إضافي", price: 2.00 }]
   },
@@ -363,7 +364,7 @@ export const menuItems: MenuItem[] = [
     descEn: "Premium sandwich layers packed with turkey breast, roast beef, fried egg, cheese, and mayonnaise.",
     descAr: "طبقات سندوتش فاخرة محشوة بصدر ديك رومي، لحم بقري مشوي، بيض مقلي، وجبن.",
     price: 12.00,
-    image: "/assets/spit_burger.png",
+    image: "/assets/logo.png",
     sizes: [{ labelEn: "Special Portion", labelAr: "كلوب خاص كامل", priceModifier: 0 }],
     addons: []
   },
@@ -375,7 +376,7 @@ export const menuItems: MenuItem[] = [
     descEn: "Triple-layer bread stuffed with hot zinger chicken, sliced cheese, lettuce, and hot dynamite spreads.",
     descAr: "سندوتش كلوب ثلاثي محشو بدجاج زنجر حار، جبن شيدر، خس، وصلصة حارة.",
     price: 12.00,
-    image: "/assets/spit_burger.png",
+    image: "/assets/logo.png",
     sizes: [{ labelEn: "Spicy Club", labelAr: "كلوب حار", priceModifier: 0 }],
     addons: [{ labelEn: "Extra Sauce", labelAr: "صوص إضافي", price: 1.00 }]
   },
@@ -387,7 +388,7 @@ export const menuItems: MenuItem[] = [
     descEn: "Grilled ground beef, bacon strips, melted provolone, pickles, and lettuce in three slice breads.",
     descAr: "لحم بقري مشوي، شرائح بيكن، جبن بروفولون ذائب، خس ومخلل في كلوب سندوتش.",
     price: 12.00,
-    image: "/assets/spit_burger.png",
+    image: "/assets/logo.png",
     sizes: [{ labelEn: "Beef Club", labelAr: "كلوب لحم", priceModifier: 0 }],
     addons: []
   },
@@ -399,7 +400,7 @@ export const menuItems: MenuItem[] = [
     descEn: "Sautéed mushrooms, green peppers, tomatoes, onions, lettuce, and white cheese slices.",
     descAr: "مشروم سوتيه، فلفل أخضر، طماطم، بصل، خس، وشرائح جبن أبيض.",
     price: 10.00,
-    image: "/assets/spit_burger.png",
+    image: "/assets/logo.png",
     sizes: [{ labelEn: "Veggie Club", labelAr: "كلوب نباتي", priceModifier: 0 }],
     addons: []
   },
@@ -413,7 +414,7 @@ export const menuItems: MenuItem[] = [
     descEn: "Cold pressed fresh pomegranate seed nectar, chilled with crushed ice.",
     descAr: "عصير رمان طازج معصور بارداً ومنعش بالثلج المجروش.",
     price: 6.00,
-    image: "/assets/pomegranate_drink.png",
+    image: "/assets/logo.png",
     sizes: [
       { labelEn: "Regular Cup", labelAr: "كوب عادي", priceModifier: 0 },
       { labelEn: "Large Bottle", labelAr: "جالون عائلي", priceModifier: 4.00 }
@@ -428,7 +429,7 @@ export const menuItems: MenuItem[] = [
     descEn: "100% natural cold pressed sweet orange juice.",
     descAr: "عصير برتقال طبيعي ١٠٠٪ معصور طازجاً ومليء بالفيتامين.",
     price: 6.00,
-    image: "/assets/pomegranate_drink.png",
+    image: "/assets/logo.png",
     sizes: [{ labelEn: "Regular Cup", labelAr: "كوب عادي", priceModifier: 0 }],
     addons: []
   },
@@ -440,7 +441,7 @@ export const menuItems: MenuItem[] = [
     descEn: "Thick sweet nectar prepared from fresh ripe alphonso mangoes.",
     descAr: "عصير مانجو غني وحلو ومحضّر من مانجو ألفونسو الطازجة.",
     price: 6.00,
-    image: "/assets/pomegranate_drink.png",
+    image: "/assets/logo.png",
     sizes: [{ labelEn: "Regular Cup", labelAr: "كوب عادي", priceModifier: 0 }],
     addons: []
   },
@@ -452,7 +453,7 @@ export const menuItems: MenuItem[] = [
     descEn: "Signature layered juice: rich creamy blended avocado topped with sweet watermelon nectar.",
     descAr: "عصير طبقات مميز: مزيج الأفوكادو الكريمي المغطى بعصير البطيخ الحلو والبارد.",
     price: 10.00,
-    image: "/assets/pomegranate_drink.png",
+    image: "/assets/logo.png",
     sizes: [{ labelEn: "Large Jar", labelAr: "كوب كبير", priceModifier: 0 }],
     addons: []
   },
@@ -464,7 +465,7 @@ export const menuItems: MenuItem[] = [
     descEn: "Refreshing frozen slush blend of lime, fresh mint leaves, and ice.",
     descAr: "مزيج ليمون طازج مثلج مع أوراق النعناع البري المنعشة والثلج.",
     price: 6.00,
-    image: "/assets/pomegranate_drink.png",
+    image: "/assets/logo.png",
     sizes: [{ labelEn: "Regular Cup", labelAr: "كوب عادي", priceModifier: 0 }],
     addons: []
   },
@@ -476,7 +477,7 @@ export const menuItems: MenuItem[] = [
     descEn: "Refreshing strawberry syrup, sparkling soda, lime squeezes, and spearmint leaves.",
     descAr: "مشروب فوار بنكهة الفراولة المنعشة، ليمون، ونعناع مع الصودا والثلج.",
     price: 12.00,
-    image: "/assets/lemonade_drink.png",
+    image: "/assets/logo.png",
     sizes: [{ labelEn: "Sparkling Mojito", labelAr: "موهيتو فوار", priceModifier: 0 }],
     addons: []
   },
@@ -488,7 +489,7 @@ export const menuItems: MenuItem[] = [
     descEn: "Glow blue mojito infused with energy elements, sparkling soda, lime, and crushed ice.",
     descAr: "موهيتو فوار باللون الأزرق المنعش مع عناصر الطاقة، الليمون، والثلج.",
     price: 12.00,
-    image: "/assets/lemonade_drink.png",
+    image: "/assets/logo.png",
     sizes: [{ labelEn: "Sparkling Mojito", labelAr: "موهيتو فوار", priceModifier: 0 }],
     addons: []
   },
@@ -500,7 +501,7 @@ export const menuItems: MenuItem[] = [
     descEn: "Sweet and tangy passion fruit nectar blended with mint leaves, lemon juice, and soda.",
     descAr: "مذاق فاكهة العاطفة الاستوائية مع صودا فوارة، نعناع، وعصير ليمون.",
     price: 12.00,
-    image: "/assets/lemonade_drink.png",
+    image: "/assets/logo.png",
     sizes: [{ labelEn: "Sparkling Mojito", labelAr: "موهيتو فوار", priceModifier: 0 }],
     addons: []
   },
@@ -512,7 +513,7 @@ export const menuItems: MenuItem[] = [
     descEn: "Hot brewed red tea leaves, perfect digestif after a heavy spicy feast.",
     descAr: "كوب شاي أحمر ساخن محضر من أوراق الشاي الفاخرة.",
     price: 10.00,
-    image: "/assets/lemonade_drink.png",
+    image: "/assets/logo.png",
     sizes: [{ labelEn: "Hot Cup", labelAr: "كوب ساخن", priceModifier: 0 }],
     addons: []
   },
@@ -526,7 +527,7 @@ export const menuItems: MenuItem[] = [
     descEn: "Golden fries loaded with chicken shawarma, melted cheddar cheese, and signature Kanz sauce.",
     descAr: "بطاطس ذهبية مغطاة بشاورما الدجاج، صوص الجبنة الشيدر الذائبة، وصلصة كانز الخاصة.",
     price: 17.00,
-    image: "/assets/baguette_sub.png",
+    image: "/assets/logo.png",
     sizes: [{ labelEn: "Sharing Platter", labelAr: "وجبة مشاركة", priceModifier: 0 }],
     addons: []
   },
@@ -538,7 +539,7 @@ export const menuItems: MenuItem[] = [
     descEn: "French fries loaded with chopped zinger spicy chicken bites, cheese sauce, and hot ranch.",
     descAr: "بطاطس مقرمشة مغطاة بقطع دجاج زنجر حار، صوص الجبنة، وصلصة رانش حارة.",
     price: 14.00,
-    image: "/assets/baguette_sub.png",
+    image: "/assets/logo.png",
     sizes: [{ labelEn: "Sharing Platter", labelAr: "وجبة مشاركة", priceModifier: 0 }],
     addons: []
   },
@@ -550,7 +551,7 @@ export const menuItems: MenuItem[] = [
     descEn: "Sweet seasoned french fries tossed in special chef's herb spice blends.",
     descAr: "بطاطس متبلة ببهارات وأعشاب الشيف الخاصة بنكهة رائعة.",
     price: 7.00,
-    image: "/assets/baguette_sub.png",
+    image: "/assets/logo.png",
     sizes: [{ labelEn: "Standard Fries", labelAr: "حجم قياسي", priceModifier: 0 }],
     addons: []
   },
@@ -562,7 +563,7 @@ export const menuItems: MenuItem[] = [
     descEn: "Golden french fries drenched in rich hot melted cheddar cheese sauce.",
     descAr: "بطاطس ذهبية مقلية مغمورة بصوص الجبنة الشيدر الذائبة الساخنة.",
     price: 10.00,
-    image: "/assets/baguette_sub.png",
+    image: "/assets/logo.png",
     sizes: [{ labelEn: "Standard", labelAr: "حجم قياسي", priceModifier: 0 }],
     addons: []
   },
@@ -574,7 +575,7 @@ export const menuItems: MenuItem[] = [
     descEn: "Crispy batter-fried sweet onion rings served with a side of garlic mayonnaise.",
     descAr: "حلقات بصل مقلية ومقرمشة تقدم مع مايونيز ثوم جانبي.",
     price: 6.00,
-    image: "/assets/baguette_sub.png",
+    image: "/assets/logo.png",
     sizes: [{ labelEn: "8 Pieces", labelAr: "٨ حبات", priceModifier: 0 }],
     addons: []
   },
@@ -586,7 +587,7 @@ export const menuItems: MenuItem[] = [
     descEn: "Breaded melting mozzarella cheese sticks served with marinara dip.",
     descAr: "أصابع جبن موزاريلا مقرمشة وذائبة تقدم مع صلصة مارينارا.",
     price: 10.00,
-    image: "/assets/baguette_sub.png",
+    image: "/assets/logo.png",
     sizes: [{ labelEn: "5 Pieces", labelAr: "٥ حبات", priceModifier: 0 }],
     addons: []
   },
@@ -598,7 +599,7 @@ export const menuItems: MenuItem[] = [
     descEn: "Spicy breaded crispy chicken strips, served with hot garlic mayonnaise dip.",
     descAr: "قطع دجاج زنجر مقرمشة وحارة تقدم مع صوص الثوم الحار.",
     price: 19.00,
-    image: "/assets/baguette_sub.png",
+    image: "/assets/logo.png",
     sizes: [{ labelEn: "Large Portion", labelAr: "وجبة كبيرة", priceModifier: 0 }],
     addons: []
   },
@@ -610,7 +611,7 @@ export const menuItems: MenuItem[] = [
     descEn: "Golden crispy chicken fillet nuggets served with garlic paste and french fries (Baik style).",
     descAr: "قطع مسحب دجاج ذهبية مقرمشة تقدم مع الثومية والبطاطس على طريقة بايك الشهيرة.",
     price: 18.00,
-    image: "/assets/baguette_sub.png",
+    image: "/assets/logo.png",
     sizes: [{ labelEn: "6 Pieces Box", labelAr: "٦ قطع مع بطاطس", priceModifier: 0 }],
     addons: []
   },
@@ -624,7 +625,7 @@ export const menuItems: MenuItem[] = [
     descEn: "Crisp romaine, tomatoes, cucumber, radishes, sumac, fresh mint, and toasted Saj croutons in pomegranate dressing.",
     descAr: "خس، طماطم، خيار، فجل، سماق، نعناع طازج، وقطع خبز صاج محمص مع دبس الرمان.",
     price: 10.00,
-    image: "/assets/baguette_sub.png",
+    image: "/assets/logo.png",
     sizes: [{ labelEn: "Standard Plate", labelAr: "وجبة صحن", priceModifier: 0 }],
     addons: []
   },
@@ -636,7 +637,7 @@ export const menuItems: MenuItem[] = [
     descEn: "Simple mix of fresh cucumber, lettuce, tomato, parsley, lemon juice, and olive oil dressing.",
     descAr: "مزيج بسيط من الخيار الطازج، الخس، الطماطم، البقدونس، مع ليمون وزيت زيتون.",
     price: 10.00,
-    image: "/assets/baguette_sub.png",
+    image: "/assets/logo.png",
     sizes: [{ labelEn: "Standard", labelAr: "صحن عادي", priceModifier: 0 }],
     addons: []
   },
@@ -648,7 +649,7 @@ export const menuItems: MenuItem[] = [
     descEn: "Finely chopped fresh parsley, mint, bulgur wheat, tomatoes, onions, olive oil, and lemon dressing.",
     descAr: "بقدونس مفروم طازج، نعناع، برغل، طماطم، بصل، زيت زيتون وعصرة ليمون حامض.",
     price: 10.00,
-    image: "/assets/baguette_sub.png",
+    image: "/assets/logo.png",
     sizes: [{ labelEn: "Standard", labelAr: "صحن عادي", priceModifier: 0 }],
     addons: []
   },
@@ -662,7 +663,7 @@ export const menuItems: MenuItem[] = [
     descEn: "Signature creamy white garlic paste cup, perfect with rotisserie shawarma.",
     descAr: "علبة ثومية كريمية شهيرة ومحفوظة، مثالية مع قطع الشاورما.",
     price: 1.00,
-    image: "/assets/baguette_sub.png",
+    image: "/assets/logo.png",
     sizes: [{ labelEn: "Small Cup", labelAr: "علبة صغيرة", priceModifier: 0 }],
     addons: []
   },
@@ -674,7 +675,7 @@ export const menuItems: MenuItem[] = [
     descEn: "Blended ketchup, mayonnaise, and secret spices dip cup.",
     descAr: "علبة صوص كوكتيل لذيذة ومخلوطة من الكاتشب والمايونيز والبهارات.",
     price: 2.00,
-    image: "/assets/baguette_sub.png",
+    image: "/assets/logo.png",
     sizes: [{ labelEn: "Small Cup", labelAr: "علبة صغيرة", priceModifier: 0 }],
     addons: []
   },
@@ -686,7 +687,7 @@ export const menuItems: MenuItem[] = [
     descEn: "Creamy pureed chickpeas, tahini, garlic, lemon juice, and olive oil drip.",
     descAr: "حمص مطحون ناعم مع طحينة، ثوم، ليمون، وزيت زيتون.",
     price: 5.00,
-    image: "/assets/baguette_sub.png",
+    image: "/assets/logo.png",
     sizes: [{ labelEn: "Portion plate", labelAr: "صحن صغير", priceModifier: 0 }],
     addons: []
   },
@@ -700,7 +701,7 @@ export const menuItems: MenuItem[] = [
     descEn: "Scrambled eggs simmered in a spiced tomato, pepper, and onion sauce, served with Saj flatbread.",
     descAr: "بيض مخفوق مطبوخ مع صلصة الطماطم المتبلة، الفلفل، والبصل، يقدم مع خبز صاج.",
     price: 5.00,
-    image: "/assets/baguette_sub.png",
+    image: "/assets/logo.png",
     sizes: [{ labelEn: "Plate Portion", labelAr: "صحن شكشوكة", priceModifier: 0 }],
     addons: []
   },
@@ -712,7 +713,7 @@ export const menuItems: MenuItem[] = [
     descEn: "Warm fava beans cooked with cumin, garlic, lemon, topped with chopped tomatoes, olive oil, and herbs.",
     descAr: "صحن فول مدمس مطبوخ مع الكمون، الثوم، الليمون، مغطى بالطماطم المفرومة وزيت الزيتون.",
     price: 5.00,
-    image: "/assets/baguette_sub.png",
+    image: "/assets/logo.png",
     sizes: [{ labelEn: "Plate Portion", labelAr: "صحن فول", priceModifier: 0 }],
     addons: []
   },
@@ -724,7 +725,7 @@ export const menuItems: MenuItem[] = [
     descEn: "Spiced beef liver sautéed with bell peppers, onions, cumin, and garlic, served with bread.",
     descAr: "كبدة مشوية على الصاج مع الفلفل الرومي، البصل، الكمون والثوم، وتقدم مع الخبز.",
     price: 15.00,
-    image: "/assets/baguette_sub.png",
+    image: "/assets/logo.png",
     sizes: [{ labelEn: "Plate Portion", labelAr: "صحن كبدة", priceModifier: 0 }],
     addons: []
   }
@@ -768,11 +769,15 @@ interface CartContextProps {
     notes: string;
     paymentMethod: string;
   } | null;
+  dbMenuItems: MenuItem[];
+  updateProductImage: (productId: string, base64Data: string) => void;
+  resetProductImage: (productId: string) => void;
 }
 
 const CartContext = createContext<CartContextProps | undefined>(undefined);
 
 export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  const [dbMenuItems, setDbMenuItems] = useState<MenuItem[]>(menuItems);
   const [cart, setCart] = useState<CartItem[]>([]);
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [isCustomizerOpen, setIsCustomizerOpen] = useState(false);
@@ -785,6 +790,42 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [deliveryFee, setDeliveryFeeState] = useState(5.00); // 5 AED default delivery
   const [deliveryType, setDeliveryTypeState] = useState<"delivery" | "dinein" | "takeaway">("delivery");
   const [checkoutDetails, setCheckoutDetails] = useState<CartContextProps["checkoutDetails"]>(null);
+
+  // Sync custom image overrides from localStorage
+  useEffect(() => {
+    const customImages = JSON.parse(localStorage.getItem("kanz_custom_images") || "{}");
+    if (Object.keys(customImages).length > 0) {
+      setDbMenuItems(prev =>
+        prev.map(item => 
+          customImages[item.id] ? { ...item, image: customImages[item.id] } : item
+        )
+      );
+    }
+  }, []);
+
+  const updateProductImage = (productId: string, base64Data: string) => {
+    const customImages = JSON.parse(localStorage.getItem("kanz_custom_images") || "{}");
+    customImages[productId] = base64Data;
+    localStorage.setItem("kanz_custom_images", JSON.stringify(customImages));
+    
+    setDbMenuItems(prev =>
+      prev.map(item => 
+        item.id === productId ? { ...item, image: base64Data } : item
+      )
+    );
+  };
+
+  const resetProductImage = (productId: string) => {
+    const customImages = JSON.parse(localStorage.getItem("kanz_custom_images") || "{}");
+    delete customImages[productId];
+    localStorage.setItem("kanz_custom_images", JSON.stringify(customImages));
+    
+    setDbMenuItems(prev =>
+      prev.map(item => 
+        item.id === productId ? { ...item, image: "/assets/logo.png" } : item
+      )
+    );
+  };
 
   const setDeliveryType = (type: "delivery" | "dinein" | "takeaway") => {
     setDeliveryTypeState(type);
@@ -823,7 +864,7 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
   };
 
   const openCustomizer = (itemId: string) => {
-    const item = menuItems.find(i => i.id === itemId);
+    const item = dbMenuItems.find(i => i.id === itemId);
     if (item) {
       setCustomizerItem(item);
       setIsCustomizerOpen(true);
@@ -952,7 +993,10 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
       setDeliveryFee,
       deliveryType,
       setDeliveryType,
-      checkoutDetails
+      checkoutDetails,
+      dbMenuItems,
+      updateProductImage,
+      resetProductImage
     }}>
       {children}
     </CartContext.Provider>

@@ -18,7 +18,8 @@ export default function Home() {
     addToCart,
     deliveryFee,
     discountPercent,
-    couponCode
+    couponCode,
+    dbMenuItems
   } = useCart();
   
   const [activeCategory, setActiveCategory] = useState<string>("shawarma");
@@ -95,7 +96,7 @@ export default function Home() {
 
   return (
     <div className="bg-[#F5F6F8] text-[#1A1A1A] pt-32 pb-20 min-h-screen">
-      <div className="w-[95%] max-w-[1240px] mx-auto">
+      <div className="w-[90%] max-w-[1200px] mx-auto">
         
         {/* Sticky Sub-Header Category Tabs */}
         <div className="sticky top-14 z-30 bg-white/95 backdrop-blur-md p-3 rounded-lg border border-neutral-200/60 shadow-sm mb-6 flex items-center justify-between gap-4">
@@ -138,7 +139,7 @@ export default function Home() {
           {/* Left Column: Menu Items Vertically Grouped */}
           <div className="lg:col-span-8 space-y-10">
             {categories.map((cat) => {
-              const catItems = menuItems.filter(item => item.category === cat.id);
+              const catItems = dbMenuItems.filter(item => item.category === cat.id);
               const filteredCatItems = catItems.filter(item => {
                 const name = locale === "en" ? item.nameEn : item.nameAr;
                 return name.toLowerCase().includes(searchQuery.toLowerCase());

@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Shawarma b'Kanz | Taste the Treasure of Flame-Grilled Shawarma</title>
+  
+  <!-- SEO Meta Tags -->
+  <meta name="description" content="Savor the finest slow-roasted, flame-seared shawarmas, burgers, and sandwiches at Shawarma b'Kanz. Crafted with our legendary 18-spice blend. Order online now!">
+  <meta name="keywords" content="shawarma, shawarma kanz, shawarmabkanz, flame grilled shawarma, middle eastern food, wraps, kebabs, garlic sauce, online food delivery">
+  <meta name="author" content="Shawarma b'Kanz">
+  
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Shawarma b'Kanz | Taste the Treasure of Flame-Grilled Shawarma">
+  <meta property="og:description" content="Discover the treasure of spit-roasted perfection. Enjoy flame-seared shawarmas, burgers, sandwiches, and mocktails.">
+  <meta property="og:image" content="assets/hero_shawarma.png">
+  <meta property="og:url" content="https://shawarmabkanz.com">
+
+  <!-- Google Fonts: Outfit (English) & Cairo (Arabic) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&family=Outfit:wght@300;400;500;600;700;900&display=swap" rel="stylesheet">
+  
+  <!-- Custom Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Floating Glow FX in Background -->
+  <div class="bg-glow bg-glow-1"></div>
+  <div class="bg-glow bg-glow-2"></div>
+
+  <!-- Header / Navigation -->
+  <header id="main-header" class="header-glass">
+    <div class="container nav-container">
+      <a href="#" class="logo-area" id="nav-logo-link">
+        <img src="assets/logo.png" alt="Shawarma b'Kanz Logo" class="nav-logo" id="logo-img">
+        <span class="brand-name" data-translate="brand_name">Shawarma b'Kanz</span>
+      </a>
+      
+      <nav class="nav-links-wrapper" id="nav-menu">
+        <ul class="nav-list">
+          <li><a href="#hero" class="nav-link active" data-translate="nav_home">Home</a></li>
+          <li><a href="#story" class="nav-link" data-translate="nav_story">Our Treasure</a></li>
+          <li><a href="#spit-experience" class="nav-link" data-translate="nav_spit">Spit Experience</a></li>
+          <li><a href="#menu" class="nav-link" data-translate="nav_menu">Menu</a></li>
+          <li><a href="#testimonials" class="nav-link" data-translate="nav_reviews">Reviews</a></li>
+          <li><a href="#contact" class="nav-link" data-translate="nav_contact">Find Us</a></li>
+        </ul>
+      </nav>
+
+      <div class="nav-actions">
+        <!-- Language Selector -->
+        <button id="lang-toggle-btn" class="btn-icon" aria-label="Toggle Language">
+          <span class="lang-text">العربية</span>
+        </button>
+
+        <!-- Cart Button -->
+        <button id="cart-toggle-btn" class="btn-icon cart-btn" aria-label="Open Shopping Cart">
+          <svg class="cart-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+          </svg>
+          <span id="cart-count-badge" class="cart-badge">0</span>
+        </button>
+
+        <!-- Mobile Menu Toggle -->
+        <button id="mobile-menu-btn" class="btn-icon mobile-menu-toggle" aria-label="Toggle Navigation Menu">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section id="hero" class="hero-section">
+    <div class="container hero-container">
+      <div class="hero-content scroll-reveal">
+        <span class="hero-badge" data-translate="hero_badge">🔥 Pure Spit-Roasted Perfection</span>
+        <h1 class="hero-title">
+          <span class="accent-text" data-translate="hero_title_accent">Taste the Treasure</span> <br>
+          <span data-translate="hero_title_main">of Flame-Sear</span>
+        </h1>
+        <p class="hero-desc" data-translate="hero_desc">
+          Born from flame, infused with our legendary 18-spice recipe, and carved hot onto artisan flatbreads. Taste the true treasure of shawarma.
+        </p>
+        <div class="hero-ctas">
+          <a href="#menu" class="btn btn-primary" data-translate="hero_cta_order">Order Online Now</a>
+          <a href="#spit-experience" class="btn btn-outline" data-translate="hero_cta_explore">Explore Spit Secret</a>
+        </div>
+        
+        <!-- Social Proof Stats -->
+        <div class="hero-stats">
+          <div class="stat-item">
+            <h3 class="stat-number">4.9★</h3>
+            <p class="stat-label" data-translate="stat_reviews">5k+ Reviews</p>
+          </div>
+          <div class="stat-divider"></div>
+          <div class="stat-item">
+            <h3 class="stat-number" data-translate="stat_spices_val">18</h3>
+            <p class="stat-label" data-translate="stat_spices">Secret Spices</p>
+          </div>
+          <div class="stat-divider"></div>
+          <div class="stat-item">
+            <h3 class="stat-number" data-translate="stat_locations_val">3</h3>
+            <p class="stat-label" data-translate="stat_locations">Outlets</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="hero-visual scroll-reveal">
+        <div class="hero-image-wrapper">
+          <img src="assets/hero_shawarma.png" alt="Sizzling Shawarma Wrap" class="hero-food-img">
+          <!-- Rising smoke element -->
+          <div class="smoke-container">
+            <div class="smoke-particle p1"></div>
+            <div class="smoke-particle p2"></div>
+            <div class="smoke-particle p3"></div>
+          </div>
+          <!-- Spark element -->
+          <div class="sparks-container">
+            <div class="spark s1"></div>
+            <div class="spark s2"></div>
+            <div class="spark s3"></div>
+            <div class="spark s4"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Brand Story ("The Kanz") Section -->
+  <section id="story" class="story-section section-padding">
+    <div class="container">
+      <div class="section-header text-center scroll-reveal">
+        <h2 class="section-subtitle" data-translate="story_subtitle">The Legend of Kanz</h2>
+        <h3 class="section-title" data-translate="story_title">What Makes It a Treasure?</h3>
+        <p class="section-desc" data-translate="story_desc">"Kanz" in Arabic means treasure. Every bite of our food is crafted to live up to that name, combining centuries-old slow cooking with contemporary culinary craftsmanship.</p>
+      </div>
+
+      <div class="story-grid">
+        <div class="story-card scroll-reveal">
+          <div class="story-icon">
+            <!-- Flame outline -->
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+              <path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+            </svg>
+          </div>
+          <h4 class="story-card-title" data-translate="story_feat1_title">18-Spice Signature</h4>
+          <p class="story-card-desc" data-translate="story_feat1_desc">A closely guarded family recipe using cardamoms, Sumac, clove, and wild herbs sourced directly from Middle Eastern mountains.</p>
+        </div>
+
+        <div class="story-card scroll-reveal">
+          <div class="story-icon">
+            <!-- Rotisserie icon -->
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 1121.21 7.89M9 11l3 3L22 4" />
+            </svg>
+          </div>
+          <h4 class="story-card-title" data-translate="story_feat2_title">Flame-Seared Finish</h4>
+          <p class="story-card-desc" data-translate="story_feat2_desc">We don't just carve. Our carvings get a flash sear over open flame grates, locking in juices and offering unmatched crispy edges.</p>
+        </div>
+
+        <div class="story-card scroll-reveal">
+          <div class="story-icon">
+            <!-- Wheat/bread icon -->
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707m0-12.728l.707.707m12.728 12.728l.707-.707M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+          </div>
+          <h4 class="story-card-title" data-translate="story_feat3_title">Stone-Baked Bread</h4>
+          <p class="story-card-desc" data-translate="story_feat3_desc">Traditional Saj and Markouk flatbreads are rolled thin and baked freshly on the Saj dome for each individual order.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Interactive Spit Experience Section -->
+  <section id="spit-experience" class="spit-section section-padding">
+    <div class="container spit-container-grid">
+      <!-- Spit Visual Graphic -->
+      <div class="spit-visual-area scroll-reveal">
+        <h3 class="spit-heading-mobile" data-translate="spit_mobile_heading">Click parts to inspect</h3>
+        <div class="spit-apparatus">
+          <!-- Stand structure -->
+          <div class="spit-stand-top"></div>
+          
+          <!-- Rotating central rod and meat -->
+          <div class="spit-rotator">
+            <div class="spit-rod"></div>
+            
+            <!-- Shawarma Meat Block -->
+            <div class="spit-meat-block">
+              <!-- Animated layers of meat -->
+              <div class="meat-layer layer-top hotspot" data-hotspot="1">
+                <span class="hotspot-pulse"></span>
+              </div>
+              <div class="meat-layer layer-middle hotspot" data-hotspot="2">
+                <span class="hotspot-pulse"></span>
+              </div>
+              <div class="meat-layer layer-bottom hotspot" data-hotspot="3">
+                <span class="hotspot-pulse"></span>
+              </div>
+            </div>
+          </div>
+          
+          <div class="spit-stand-bottom"></div>
+          
+          <!-- Animated Fire pit at bottom -->
+          <div class="spit-fire-pit hotspot" data-hotspot="4">
+            <span class="hotspot-pulse"></span>
+            <div class="fire-flame flame-1"></div>
+            <div class="fire-flame flame-2"></div>
+            <div class="fire-flame flame-3"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Spit Interactive details text card -->
+      <div class="spit-details-area scroll-reveal">
+        <div class="spit-badge" data-translate="spit_badge">🔍 Interactive Spit Anatomy</div>
+        <h2 class="spit-title" data-translate="spit_title">The Secret of the Spit</h2>
+        <p class="spit-intro" data-translate="spit_intro">Click on the glowing radar indicators on the rotisserie to discover the culinary science behind our flavor profile.</p>
+
+        <!-- Information Cards that change depending on selection -->
+        <div class="spit-info-cards">
+          <!-- Card 1: Top -->
+          <div id="spit-info-1" class="spit-info-card active">
+            <span class="card-num">01</span>
+            <h4 data-translate="spit_info_title1">Slow-Roast Self-Basting (Top)</h4>
+            <p data-translate="spit_info_desc1">The top of the cone is layered with fine mutton and beef fats. As it rotates slowly, the fats melt and trickle down, continuously basting the lower chicken or beef layers and preserving succulent moisture.</p>
+          </div>
+          <!-- Card 2: Middle -->
+          <div id="spit-info-2" class="spit-info-card">
+            <span class="card-num">02</span>
+            <h4 data-translate="spit_info_title2">Kanz Caramelized Crust (Middle)</h4>
+            <p data-translate="spit_info_desc2">Here the spice rub locks in the marinade. The slow rotational speed allows the spice sugars to caramelize slowly into a crisp, deeply flavor-dense exterior crust ready to be shaved.</p>
+          </div>
+          <!-- Card 3: Bottom -->
+          <div id="spit-info-3" class="spit-info-card">
+            <span class="card-num">03</span>
+            <h4 data-translate="spit_info_title3">Infused Citrus Drip (Bottom)</h4>
+            <p data-translate="spit_info_desc3">At the bottom base, we position custom drip rings with fresh lemon slices, cardamom pods, and sea salt. The natural drippings blend with the citrus steam, wrapping the meat in a fragrant vapor.</p>
+          </div>
+          <!-- Card 4: Fire Base -->
+          <div id="spit-info-4" class="spit-info-card">
+            <span class="card-num">04</span>
+            <h4 data-translate="spit_info_title4">Wood-Fire Hearth Base (Fire)</h4>
+            <p data-translate="spit_info_desc4">We use authentic oak wood fire burners behind the vertical rotisserie. This injects a distinct hickory woodsmoke note into the crisp, roasted edges that electric grills can never duplicate.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Interactive Menu Section -->
+  <section id="menu" class="menu-section section-padding">
+    <div class="container">
+      <div class="section-header text-center scroll-reveal">
+        <h2 class="section-subtitle" data-translate="menu_subtitle">Taste the Menu</h2>
+        <h3 class="section-title" data-translate="menu_title">Our Signature Offerings</h3>
+        <p class="section-desc" data-translate="menu_desc">Browse our flame-kissed catalog. Filter by your cravings. Select your customized options and add to your feast.</p>
+      </div>
+
+      <!-- Menu Categories Tabs (Matching 4 icons of the logo) -->
+      <div class="menu-tabs-container scroll-reveal">
+        <button class="menu-tab active" data-category="all">
+          <span data-translate="menu_tab_all">Full Feast</span>
+        </button>
+        <button class="menu-tab" data-category="wrap">
+          <!-- Wrap Icon SVG -->
+          <svg class="tab-icon" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="18" cy="18" r="16" fill="none" stroke="currentColor" stroke-width="2"/>
+            <path d="M 12 25 L 24 13" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            <path d="M 15 27 L 26 16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            <path d="M 23 13 C 25 11, 28 14, 26 16 Z" fill="currentColor"/>
+          </svg>
+          <span data-translate="menu_tab_wraps">Wraps</span>
+        </button>
+        <button class="menu-tab" data-category="burger">
+          <!-- Burger Icon SVG -->
+          <svg class="tab-icon" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="18" cy="18" r="16" fill="none" stroke="currentColor" stroke-width="2"/>
+            <path d="M 11 18 C 11 13, 25 13, 25 18 Z" fill="none" stroke="currentColor" stroke-width="2"/>
+            <line x1="9" x2="27" y1="20" y2="20" stroke="currentColor" stroke-width="2"/>
+            <path d="M 11 23 C 11 26, 25 26, 25 23 Z" fill="none" stroke="currentColor" stroke-width="2"/>
+          </svg>
+          <span data-translate="menu_tab_burgers">Burgers</span>
+        </button>
+        <button class="menu-tab" data-category="sandwich">
+          <!-- Sandwich Icon SVG -->
+          <svg class="tab-icon" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="18" cy="18" r="16" fill="none" stroke="currentColor" stroke-width="2"/>
+            <rect x="9" y="14" width="18" height="8" rx="3" fill="none" stroke="currentColor" stroke-width="2"/>
+            <line x1="12" y1="16" x2="14" y2="20" stroke="currentColor" stroke-width="1.2"/>
+            <line x1="17" y1="16" x2="19" y2="20" stroke="currentColor" stroke-width="1.2"/>
+            <line x1="22" y1="16" x2="24" y2="20" stroke="currentColor" stroke-width="1.2"/>
+          </svg>
+          <span data-translate="menu_tab_sandwiches">Sandwiches</span>
+        </button>
+        <button class="menu-tab" data-category="drink">
+          <!-- Drink Icon SVG -->
+          <svg class="tab-icon" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="18" cy="18" r="16" fill="none" stroke="currentColor" stroke-width="2"/>
+            <path d="M 13 13 L 15 25 C 15 26, 21 26, 21 25 L 23 13 Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+            <line x1="11" y1="13" x2="25" y2="13" stroke="currentColor" stroke-width="2"/>
+            <line x1="19" y1="13" x2="22" y2="7" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+          <span data-translate="menu_tab_drinks">Drinks</span>
+        </button>
+      </div>
+
+      <!-- Menu Items Grid -->
+      <div id="menu-items-grid" class="menu-grid scroll-reveal">
+        <!-- Rendered dynamically by JavaScript to handle translation and additions, fallback static items inside HTML for accessibility/SEO -->
+      </div>
+    </div>
+  </section>
+
+  <!-- Review / Testimonial Section -->
+  <section id="testimonials" class="testimonial-section section-padding">
+    <div class="container">
+      <div class="section-header text-center scroll-reveal">
+        <h2 class="section-subtitle" data-translate="reviews_subtitle">Wall of Flavour</h2>
+        <h3 class="section-title" data-translate="reviews_title">Loved by Shawarma Critics</h3>
+        <p class="section-desc" data-translate="reviews_desc">See what food lovers and street-food critics have to say about the spit-fired treasures at Shawarma b'Kanz.</p>
+      </div>
+
+      <!-- Testimonial Slider Wrapper -->
+      <div class="testimonial-slider-container scroll-reveal">
+        <div class="testimonial-slider" id="testimonial-slider">
+          <!-- Testimonial 1 -->
+          <div class="testimonial-card">
+            <div class="rating">⭐⭐⭐⭐⭐</div>
+            <p class="review-text">"I've had shawarma in Beirut, Dubai, and Istanbul, but the flame-seared crust at Shawarma b'Kanz is on another level. The chicken is incredibly juicy, and the garlic paste is silky-smooth perfection!"</p>
+            <div class="reviewer-info">
+              <div class="reviewer-avatar">RA</div>
+              <div class="reviewer-details">
+                <h4 class="reviewer-name">Rami Al-Assaf</h4>
+                <p class="reviewer-title" data-translate="crit_label">Food Critic, Cairo Eats</p>
+              </div>
+            </div>
+          </div>
+          <!-- Testimonial 2 -->
+          <div class="testimonial-card">
+            <div class="rating">⭐⭐⭐⭐⭐</div>
+            <p class="review-text">"The Kanz Sub inside that toasted baguette is a masterpiece. The fries are crunchy, the pickle tang is sharp, and the meat has this amazing wood-grilled hickory scent. 10/10!"</p>
+            <div class="reviewer-info">
+              <div class="reviewer-avatar">SK</div>
+              <div class="reviewer-details">
+                <h4 class="reviewer-name">Sarah Khan</h4>
+                <p class="reviewer-title" data-translate="reviewer_label_2">Local Guide</p>
+              </div>
+            </div>
+          </div>
+          <!-- Testimonial 3 -->
+          <div class="testimonial-card">
+            <div class="rating">⭐⭐⭐⭐⭐</div>
+            <p class="review-text">"The Spit-Fired Burger is a genius combination. Putting shaved shawarma and secret sauce on top of a beef patty? Absolute heaven. Best late night spot in town."</p>
+            <div class="reviewer-info">
+              <div class="reviewer-avatar">MD</div>
+              <div class="reviewer-details">
+                <h4 class="reviewer-name">Michael Diaz</h4>
+                <p class="reviewer-title" data-translate="reviewer_label_3">Burgers of Arabia Blog</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="slider-controls">
+          <button class="slider-dot active" data-index="0" aria-label="Slide 1"></button>
+          <button class="slider-dot" data-index="1" aria-label="Slide 2"></button>
+          <button class="slider-dot" data-index="2" aria-label="Slide 3"></button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Find Us / Contact Section -->
+  <section id="contact" class="contact-section section-padding">
+    <div class="container contact-grid">
+      <div class="contact-info-area scroll-reveal">
+        <h2 class="contact-title" data-translate="contact_title">Visit the Treasure</h2>
+        <p class="contact-desc" data-translate="contact_desc">Come visit our outlets to eat it hot right off the spit, or reach out to us for catering.</p>
+        
+        <div class="contact-details">
+          <div class="contact-detail-item">
+            <div class="detail-icon">📍</div>
+            <div>
+              <h4 data-translate="contact_loc_title">Main Flagship Outlet</h4>
+              <p data-translate="contact_loc_desc">45 El-Nozha Street, Heliopolis, Cairo, Egypt</p>
+            </div>
+          </div>
+          <div class="contact-detail-item">
+            <div class="detail-icon">📞</div>
+            <div>
+              <h4 data-translate="contact_phone_title">Delivery & Catering</h4>
+              <p>+20 100 2345 678 | +20 2 2418 9090</p>
+            </div>
+          </div>
+          <div class="contact-detail-item">
+            <div class="detail-icon">✉️</div>
+            <div>
+              <h4 data-translate="contact_email_title">Support Email</h4>
+              <p>hello@shawarmabkanz.com</p>
+            </div>
+          </div>
+          <div class="contact-detail-item">
+            <div class="detail-icon">⏰</div>
+            <div>
+              <h4 data-translate="contact_hours_title">Opening Hours</h4>
+              <p data-translate="contact_hours_desc">Everyday: 12:00 PM - 03:00 AM (Midnight cravings covered!)</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Contact and Map Box -->
+      <div class="contact-map-area scroll-reveal">
+        <div class="map-card-wrapper">
+          <!-- Stylized Custom Interactive Map Placeholder -->
+          <div class="map-placeholder">
+            <!-- Custom Styled vector map backdrop inside CSS -->
+            <div class="map-grid-lines"></div>
+            <div class="map-road road-1"></div>
+            <div class="map-road road-2"></div>
+            <div class="map-road road-3"></div>
+            <div class="map-pin">
+              <img src="assets/logo.png" alt="Shawarma b'Kanz Map Marker">
+              <span class="map-pin-pulse"></span>
+            </div>
+            <div class="map-popup">
+              <h5 data-translate="brand_name">Shawarma b'Kanz</h5>
+              <p data-translate="map_popup_text">Smell the roast from here!</p>
+            </div>
+          </div>
+          
+          <div class="form-container">
+            <h4 data-translate="form_title">Send us a message</h4>
+            <form id="contact-form" onsubmit="event.preventDefault(); alert('Message sent successfully!');">
+              <div class="form-row">
+                <input type="text" placeholder="Name" required data-translate-placeholder="form_name_placeholder">
+                <input type="email" placeholder="Email" required data-translate-placeholder="form_email_placeholder">
+              </div>
+              <textarea placeholder="Your message..." rows="3" required data-translate-placeholder="form_msg_placeholder"></textarea>
+              <button type="submit" class="btn btn-primary btn-block" data-translate="form_submit">Send Message</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="main-footer">
+    <div class="container footer-grid">
+      <div class="footer-brand">
+        <img src="assets/logo.png" alt="Shawarma b'Kanz" class="footer-logo">
+        <p class="footer-about" data-translate="footer_about">Taste the treasure of flame-seared slow-roasted shawarma. Igniting street-food traditions since 2024.</p>
+      </div>
+      <div class="footer-links">
+        <h4 data-translate="footer_links_head">Navigation</h4>
+        <ul>
+          <li><a href="#hero" data-translate="nav_home">Home</a></li>
+          <li><a href="#story" data-translate="nav_story">Our Treasure</a></li>
+          <li><a href="#menu" data-translate="nav_menu">Menu</a></li>
+          <li><a href="#testimonials" data-translate="nav_reviews">Reviews</a></li>
+        </ul>
+      </div>
+      <div class="footer-newsletter">
+        <h4 data-translate="footer_news_head">Join the Feast</h4>
+        <p data-translate="footer_news_desc">Subscribe to get secret discount codes and flame alerts.</p>
+        <form class="newsletter-form" onsubmit="event.preventDefault(); alert('Subscribed to the feast!');">
+          <input type="email" placeholder="Your email..." required data-translate-placeholder="footer_news_placeholder">
+          <button type="submit" class="btn btn-primary" data-translate="footer_news_submit">Join</button>
+        </form>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="container footer-bottom-flex">
+        <p class="copyright">&copy; 2026 Shawarma b'Kanz. All rights reserved.</p>
+        <div class="social-icons">
+          <a href="#" aria-label="Facebook">FB</a>
+          <a href="#" aria-label="Instagram">IG</a>
+          <a href="#" aria-label="TikTok">TT</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Shopping Cart Slide-out Drawer -->
+  <div id="cart-drawer" class="cart-drawer-overlay">
+    <div class="cart-drawer">
+      <div class="cart-drawer-header">
+        <h3>
+          <span data-translate="cart_title">Your Feast</span> 
+          <span id="cart-drawer-count">(0)</span>
+        </h3>
+        <button id="cart-close-btn" class="close-btn" aria-label="Close Shopping Cart">&times;</button>
+      </div>
+      
+      <!-- Cart items container -->
+      <div class="cart-drawer-body" id="cart-items-container">
+        <!-- Filled by JS -->
+        <div class="empty-cart-message">
+          <span class="empty-cart-icon">🛒</span>
+          <p data-translate="cart_empty">Your cart is empty. Start adding some treasures!</p>
+          <a href="#menu" id="start-ordering-btn" class="btn btn-outline" data-translate="cart_start_order">Go to Menu</a>
+        </div>
+      </div>
+      
+      <!-- Cart summary & checkout action -->
+      <div class="cart-drawer-footer" id="cart-footer">
+        <div class="summary-line">
+          <span data-translate="cart_subtotal">Subtotal</span>
+          <span id="cart-subtotal-val">$0.00</span>
+        </div>
+        <div class="summary-line">
+          <span data-translate="cart_tax">Tax (14%)</span>
+          <span id="cart-tax-val">$0.00</span>
+        </div>
+        <div class="summary-line font-bold">
+          <span data-translate="cart_total">Grand Total</span>
+          <span id="cart-total-val">$0.00</span>
+        </div>
+        <button id="checkout-btn" class="btn btn-primary btn-block checkout-action-btn" data-translate="cart_checkout">Place Order</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Custom Customization Modal (Spice & Size options) -->
+  <div id="custom-modal" class="modal-overlay">
+    <div class="modal-content">
+      <button id="modal-close-btn" class="close-btn" aria-label="Close Modal">&times;</button>
+      <div class="modal-header">
+        <img id="modal-item-image" class="modal-item-img" src="" alt="Menu item image">
+        <div class="modal-title-area">
+          <h3 id="modal-item-title">Item Title</h3>
+          <p id="modal-item-desc">Item Description</p>
+        </div>
+      </div>
+      <div class="modal-body">
+        <div class="custom-group">
+          <h4 data-translate="modal_size">Select Size</h4>
+          <div class="custom-options size-options">
+            <!-- Filled dynamically -->
+          </div>
+        </div>
+        <div class="custom-group">
+          <h4 data-translate="modal_spice">Spice Level</h4>
+          <div class="custom-options spice-options">
+            <button class="option-btn active" data-spice="regular" data-translate="spice_regular">Regular (Tame)</button>
+            <button class="option-btn" data-spice="medium" data-translate="spice_medium">Medium (Warmth)</button>
+            <button class="option-btn" data-spice="spicy" data-translate="spice_spicy">Kanz Fire (Ignited!)</button>
+          </div>
+        </div>
+        <div class="custom-group">
+          <h4 data-translate="modal_addons">Extra Treasures</h4>
+          <div class="custom-options addons-options">
+            <!-- Add-ons with prices -->
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <div class="modal-price-calc">
+          <span class="price-label" data-translate="modal_total">Price</span>
+          <span id="modal-total-price-val">$0.00</span>
+        </div>
+        <button id="modal-add-to-cart-btn" class="btn btn-primary" data-translate="modal_add_btn">Add to Feast</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Checkout Success Modal -->
+  <div id="success-modal" class="modal-overlay">
+    <div class="success-card">
+      <div class="success-checkmark-wrapper">
+        <svg class="success-checkmark" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+        </svg>
+      </div>
+      <h3 data-translate="success_title">Order Placed!</h3>
+      <p data-translate="success_desc">Our spitmasters have received your request. Your flame-seared feast is rotating into reality.</p>
+      
+      <!-- Order details tracker -->
+      <div class="success-tracker">
+        <div class="tracker-step active">
+          <div class="step-circle">1</div>
+          <span data-translate="step_1">Confirmed</span>
+        </div>
+        <div class="tracker-step active">
+          <div class="step-circle spit-spin-slow">🔥</div>
+          <span data-translate="step_2">Spit Roast</span>
+        </div>
+        <div class="tracker-step">
+          <div class="step-circle">🛵</div>
+          <span data-translate="step_3">Transit</span>
+        </div>
+      </div>
+      
+      <button id="success-close-btn" class="btn btn-primary" data-translate="success_close">Sweet!</button>
+    </div>
+  </div>
+
+  <!-- Main JavaScript App -->
+  <script src="app.js"></script>
+</body>
+</html>

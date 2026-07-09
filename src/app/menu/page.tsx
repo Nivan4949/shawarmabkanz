@@ -3,14 +3,14 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useLanguage } from "@/context/LanguageContext";
 import { useCart, menuItems, MenuItem } from "@/context/CartContext";
-import { Search, Heart, Flame, Plus, Check, ArrowUpDown, Sparkles } from "lucide-react";
+import { Search, Heart, Flame, Plus, Check, ArrowUpDown } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
 export default function MenuPage() {
   const { t, locale, isRtl } = useLanguage();
   const { openCustomizer, addToCart } = useCart();
   
-  const [activeCategory, setActiveCategory] = useState<"all" | "wrap" | "burger" | "sandwich" | "drink">("all");
+  const [activeCategory, setActiveCategory] = useState<"all" | "shawarma" | "burger" | "wrap" | "club" | "juice" | "starters" | "salads" | "sauces" | "plates">("all");
   const [searchQuery, setSearchQuery] = useState("");
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [sortBy, setSortBy] = useState<"popularity" | "priceLow" | "priceHigh">("popularity");
@@ -31,11 +31,16 @@ export default function MenuPage() {
   }, []);
 
   const categories = [
-    { id: "all" as const, labelEn: "Full Feast", labelAr: "الوليمة الكاملة" },
-    { id: "wrap" as const, labelEn: "Shawarma Wraps", labelAr: "شاورما لفائف" },
-    { id: "burger" as const, labelEn: "Spit Burgers", labelAr: "برجر السيخ" },
-    { id: "sandwich" as const, labelEn: "Toasted Subs", labelAr: "السندوتشات والباجيت" },
-    { id: "drink" as const, labelEn: "Fresh Juices", labelAr: "العصائر الطازجة" },
+    { id: "all" as const, labelEn: "All", labelAr: "الكل" },
+    { id: "shawarma" as const, labelEn: "Shawarma", labelAr: "شاورما" },
+    { id: "burger" as const, labelEn: "Burgers", labelAr: "البرجر" },
+    { id: "wrap" as const, labelEn: "Wraps", labelAr: "تورتيلا" },
+    { id: "club" as const, labelEn: "Clubs", labelAr: "كلوب" },
+    { id: "juice" as const, labelEn: "Juices & Tea", labelAr: "عصائر وشاي" },
+    { id: "starters" as const, labelEn: "Starters & Fries", labelAr: "مقبلات وبطاطس" },
+    { id: "salads" as const, labelEn: "Salads", labelAr: "سلطات" },
+    { id: "sauces" as const, labelEn: "Sauces", labelAr: "صوص" },
+    { id: "plates" as const, labelEn: "Plates", labelAr: "صحون" }
   ];
 
   // Load favorites from localStorage
@@ -59,14 +64,14 @@ export default function MenuPage() {
 
     // Default configuration: Regular size, Regular spice, Saj bread (or default size index 0)
     const cartItem = {
-      cartId: `${item.id}_0_regular_0__`,
+      cartId: `${item.id}_default`,
       id: item.id,
       nameEn: item.nameEn,
       nameAr: item.nameAr,
-      sizeNameEn: item.sizes[0]?.labelEn || "Regular",
-      sizeNameAr: item.sizes[0]?.labelAr || "عادي",
-      spiceNameEn: "Regular (Tame)",
-      spiceNameAr: "عادي (بدون شطة)",
+      sizeNameEn: item.sizes[0]?.labelEn || "Standard",
+      sizeNameAr: item.sizes[0]?.labelAr || "قياسي",
+      spiceNameEn: "Regular",
+      spiceNameAr: "عادي",
       addons: [],
       unitPrice: item.price,
       quantity: 1,
@@ -109,28 +114,25 @@ export default function MenuPage() {
 
   return (
     <div className="bg-[#0E0E0E] text-[#FFFFFF] pt-28 pb-20">
-      <div className="w-[90%] max-w-[1200px] mx-auto">
+      <div className="w-[95%] max-w-[1200px] mx-auto">
         
         {/* Page Header */}
-        <div className="text-center mb-12">
+        <div className="text-center mb-10">
           <span className="text-xs font-black uppercase tracking-widest text-[#C41218] mb-2 block">
             {t("menu_subtitle")}
           </span>
-          <h1 className="text-3xl md:text-5xl font-black uppercase">
+          <h1 className="text-2xl md:text-4xl font-black uppercase">
             {t("menu_title")}
           </h1>
-          <p className="text-xs text-white/50 max-w-[500px] mx-auto leading-relaxed mt-2">
-            {t("menu_desc")}
-          </p>
         </div>
 
         {/* Filter Controls (Sticky Category Nav + Search + Sort) */}
-        <div className="sticky top-[72px] z-30 bg-[#121212]/90 backdrop-blur-md p-4 rounded-2xl border border-white/5 shadow-2xl mb-12 flex flex-col gap-4">
+        <div className="sticky top-[72px] z-30 bg-[#121212]/95 p-4 rounded-xl border border-white/5 shadow-md mb-10 flex flex-col gap-4">
           
           {/* Row 1: Categories and Search */}
-          <div className="flex flex-col md:flex-row items-center justify-between gap-4 w-full">
+          <div className="flex flex-col lg:flex-row items-center justify-between gap-4 w-full">
             {/* Category Tabs with Swipe on Mobile */}
-            <div className="flex items-center gap-2 overflow-x-auto w-full md:w-auto pb-2 md:pb-0 scrollbar-none">
+            <div className="flex items-center gap-1.5 overflow-x-auto w-full lg:w-auto pb-2 lg:pb-0 scrollbar-none">
               {categories.map((cat) => {
                 const isActive = activeCategory === cat.id;
                 const label = locale === "en" ? cat.labelEn : cat.labelAr;
@@ -138,10 +140,10 @@ export default function MenuPage() {
                   <button
                     key={cat.id}
                     onClick={() => setActiveCategory(cat.id)}
-                    className={`px-5 py-2.5 rounded-xl text-xs font-bold whitespace-nowrap transition-all duration-300 ${
+                    className={`px-4 py-2 rounded-lg text-xs font-bold whitespace-nowrap transition-colors ${
                       isActive
-                        ? "bg-gradient-to-r from-[#C41218] to-[#FF7A00] text-white shadow-lg shadow-[#C41218]/15"
-                        : "bg-[#181818] text-white/60 hover:text-white border border-white/5"
+                        ? "bg-[#C41218] text-white"
+                        : "bg-[#181818] text-white/50 hover:text-white border border-white/5"
                     }`}
                   >
                     {label}
@@ -151,27 +153,27 @@ export default function MenuPage() {
             </div>
 
             {/* Search Input Box */}
-            <div ref={searchContainerRef} className="relative w-full md:w-80">
+            <div ref={searchContainerRef} className="relative w-full lg:w-72">
               <input
                 type="text"
-                placeholder={locale === "en" ? "Search foods..." : "ابحث عن طبق..."}
+                placeholder={locale === "en" ? "Search items..." : "ابحث عن صنف..."}
                 value={searchQuery}
                 onFocus={() => setShowSuggestions(true)}
                 onChange={(e) => {
                   setSearchQuery(e.target.value);
                   setShowSuggestions(true);
                 }}
-                className="w-full bg-[#181818] border border-white/5 rounded-xl py-2.5 pl-10 pr-4 text-xs text-white focus:outline-none focus:border-[#C41218] placeholder-white/40"
+                className="w-full bg-[#181818] border border-white/5 rounded-lg py-2 pl-9 pr-4 text-xs text-white focus:outline-none focus:border-[#C41218] placeholder-white/30"
                 style={{
-                  paddingLeft: isRtl ? "1rem" : "2.5rem",
-                  paddingRight: isRtl ? "2.5rem" : "1rem",
+                  paddingLeft: isRtl ? "1rem" : "2.25rem",
+                  paddingRight: isRtl ? "2.25rem" : "1rem",
                 }}
               />
               <Search
-                className="absolute top-1/2 -translate-y-1/2 w-4 h-4 text-white/40 pointer-events-none"
+                className="absolute top-1/2 -translate-y-1/2 w-4 h-4 text-white/30 pointer-events-none"
                 style={{
-                  left: isRtl ? "auto" : "1rem",
-                  right: isRtl ? "1rem" : "auto",
+                  left: isRtl ? "auto" : "0.75rem",
+                  right: isRtl ? "0.75rem" : "auto",
                 }}
               />
 
@@ -179,13 +181,13 @@ export default function MenuPage() {
               <AnimatePresence>
                 {showSuggestions && searchQuery.length > 0 && (
                   <motion.div
-                    initial={{ opacity: 0, y: 10 }}
+                    initial={{ opacity: 0, y: 5 }}
                     animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: 10 }}
-                    className="absolute left-0 right-0 mt-2 bg-[#181818] border border-white/10 rounded-xl overflow-hidden shadow-2xl z-40 max-h-[200px] overflow-y-auto scrollbar-none"
+                    exit={{ opacity: 0, y: 5 }}
+                    className="absolute left-0 right-0 mt-1 bg-[#181818] border border-white/10 rounded-lg overflow-hidden shadow-xl z-40 max-h-[180px] overflow-y-auto scrollbar-none"
                   >
                     {searchMatches.length === 0 ? (
-                      <div className="p-4 text-xs text-white/40 text-center">{locale === "en" ? "No suggestions" : "لا توجد اقتراحات"}</div>
+                      <div className="p-3 text-[11px] text-white/30 text-center">{locale === "en" ? "No matches" : "لا توجد نتائج"}</div>
                     ) : (
                       searchMatches.map(item => (
                         <button
@@ -194,10 +196,10 @@ export default function MenuPage() {
                             setSearchQuery(locale === "en" ? item.nameEn : item.nameAr);
                             setShowSuggestions(false);
                           }}
-                          className="w-full text-left rtl:text-right px-4 py-2.5 text-xs text-white/80 hover:bg-white/5 hover:text-white transition-colors border-b border-white/5 last:border-0 flex justify-between items-center"
+                          className="w-full text-left rtl:text-right px-4 py-2 text-[11px] text-white/70 hover:bg-white/5 hover:text-white transition-colors border-b border-white/5 last:border-0 flex justify-between items-center"
                         >
                           <span>{locale === "en" ? item.nameEn : item.nameAr}</span>
-                          <span className="text-[10px] text-[#FFD400]">${item.price.toFixed(2)}</span>
+                          <span className="text-[10px] text-[#FFD400]">{item.price.toFixed(2)} AED</span>
                         </button>
                       ))
                     )}
@@ -208,14 +210,14 @@ export default function MenuPage() {
           </div>
 
           {/* Row 2: Sort Selection controls */}
-          <div className="flex items-center justify-between border-t border-white/5 pt-3 text-xs text-white/50">
-            <span className="text-[10px] uppercase font-bold tracking-widest">{sortedItems.length} {locale === "en" ? "Treasures Found" : "طبق تم العثور عليه"}</span>
-            <div className="flex items-center gap-2">
+          <div className="flex items-center justify-between border-t border-white/5 pt-3 text-xs text-white/40">
+            <span>{sortedItems.length} {locale === "en" ? "Items" : "صنف"}</span>
+            <div className="flex items-center gap-1.5">
               <ArrowUpDown className="w-3.5 h-3.5" />
               <select
                 value={sortBy}
                 onChange={(e: any) => setSortBy(e.target.value)}
-                className="bg-transparent border-0 text-white font-bold cursor-pointer focus:outline-none pr-6"
+                className="bg-transparent border-0 text-white font-bold cursor-pointer focus:outline-none pr-5 text-xs"
               >
                 <option value="popularity" className="bg-[#121212]">{locale === "en" ? "Popularity" : "الأكثر مبيعاً"}</option>
                 <option value="priceLow" className="bg-[#121212]">{locale === "en" ? "Price: Low to High" : "السعر: من الأقل للأعلى"}</option>
@@ -228,18 +230,17 @@ export default function MenuPage() {
 
         {/* Menu Grid */}
         {sortedItems.length === 0 ? (
-          <div className="text-center py-20 bg-[#181818] rounded-2xl border border-white/5">
-            <span className="text-4xl block mb-4">🔍</span>
-            <p className="text-xs text-white/50">
+          <div className="text-center py-20 bg-[#181818] rounded-xl border border-white/5">
+            <p className="text-xs text-white/40">
               {locale === "en"
-                ? "No culinary treasures found matching your search."
-                : "لم نجد أي طبق يطابق خيارات البحث الحالية."}
+                ? "No items found."
+                : "لم نجد أي صنف يطابق البحث."}
             </p>
           </div>
         ) : (
           <motion.div
             layout
-            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8"
+            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"
           >
             {sortedItems.map((item) => {
               const name = locale === "en" ? item.nameEn : item.nameAr;
@@ -248,30 +249,29 @@ export default function MenuPage() {
               
               const isSpicy = item.descEn.toLowerCase().includes("spicy") || 
                               item.descEn.toLowerCase().includes("chili") ||
-                              item.id.includes("fire");
-              const isNonVeg = item.category !== "drink"; // Everything but drinks is chicken/beef
+                              item.id.includes("zinger") ||
+                              item.id.includes("mathafi");
               const isFav = favorites.includes(item.id);
               const isAdded = justAddedId === item.id;
 
               return (
-                <motion.div
-                  layout
+                <div
                   key={item.id}
                   onClick={() => openCustomizer(item.id)}
-                  className="bg-[#181818] rounded-2xl border border-white/5 overflow-hidden flex flex-col hover:border-[#C41218]/30 hover:shadow-2xl transition-all duration-300 group cursor-pointer"
+                  className="bg-[#181818] rounded-xl border border-white/5 overflow-hidden flex flex-col hover:border-[#C41218]/30 transition-all duration-200 cursor-pointer"
                 >
                   {/* Photo area */}
-                  <div className="relative h-48 overflow-hidden bg-black/20">
+                  <div className="relative h-40 overflow-hidden bg-black/10">
                     <img
                       src={item.image}
                       alt={name}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                      className="w-full h-full object-cover"
                     />
                     
                     {/* Badge */}
                     {badge && (
-                      <span className={`absolute top-4 bg-[#C41218] text-white text-[9px] font-black px-2.5 py-1 rounded-md uppercase tracking-wider ${
-                        isRtl ? "right-4" : "left-4"
+                      <span className={`absolute top-3 bg-[#C41218] text-white text-[8px] font-black px-2 py-0.5 rounded uppercase ${
+                        isRtl ? "right-3" : "left-3"
                       }`}>
                         {badge}
                       </span>
@@ -280,61 +280,52 @@ export default function MenuPage() {
                     {/* Favorite Heart Toggle */}
                     <button
                       onClick={(e) => toggleFavorite(item.id, e)}
-                      className={`absolute top-4 w-8 h-8 rounded-full bg-black/60 backdrop-blur-sm border border-white/10 flex items-center justify-center transition-all ${
-                        isRtl ? "left-4" : "right-4"
-                      } hover:scale-110`}
+                      className={`absolute top-3 w-7 h-7 rounded-full bg-black/60 backdrop-blur-sm border border-white/10 flex items-center justify-center transition-transform ${
+                        isRtl ? "left-3" : "right-3"
+                      } hover:scale-105`}
                     >
-                      <Heart className={`w-4 h-4 ${isFav ? "text-[#C41218] fill-[#C41218]" : "text-white"}`} />
+                      <Heart className={`w-3.5 h-3.5 ${isFav ? "text-[#C41218] fill-[#C41218]" : "text-white"}`} />
                     </button>
 
-                    {/* Veg/Non-Veg & Spicy Indicators Overlay at Bottom */}
-                    <div className={`absolute bottom-3 flex gap-1.5 ${isRtl ? "left-3" : "right-3"}`}>
-                      {isNonVeg && (
-                        <span className="w-5 h-5 rounded bg-black/60 border border-[#C41218]/30 flex items-center justify-center" title="Non-Vegetarian">
-                          <span className="w-2.5 h-2.5 rounded-full bg-[#C41218]" />
-                        </span>
-                      )}
-                      {isSpicy && (
-                        <span className="w-5 h-5 rounded bg-[#C41218]/80 border border-[#C41218] flex items-center justify-center" title="Spicy">
-                          <Flame className="w-3.5 h-3.5 text-white" />
-                        </span>
-                      )}
-                    </div>
+                    {/* Spicy Indicator */}
+                    {isSpicy && (
+                      <span className={`absolute bottom-3 w-6 h-6 rounded bg-[#C41218]/90 border border-[#C41218] flex items-center justify-center ${
+                        isRtl ? "left-3" : "right-3"
+                      }`}>
+                        <Flame className="w-3.5 h-3.5 text-white" />
+                      </span>
+                    )}
                   </div>
 
                   {/* Body Content */}
-                  <div className="p-6 flex flex-col flex-grow">
-                    <h3 className="text-base font-black text-white mb-2 leading-tight group-hover:text-[#FFD400] transition-colors">
+                  <div className="p-5 flex flex-col flex-grow">
+                    <h3 className="text-sm font-black text-white mb-1.5 leading-snug">
                       {name}
                     </h3>
-                    <p className="text-xs text-white/50 leading-relaxed mb-6 flex-grow line-clamp-3">
+                    <p className="text-[11px] text-white/50 leading-relaxed mb-4 flex-grow line-clamp-2">
                       {desc}
                     </p>
 
                     {/* Price and Buttons */}
-                    <div className="flex items-center justify-between mt-auto gap-4 pt-4 border-t border-white/5">
-                      <span className="text-lg font-black text-[#FFD400]">
-                        ${item.price.toFixed(2)}
+                    <div className="flex items-center justify-between mt-auto pt-3 border-t border-white/5">
+                      <span className="text-sm font-black text-[#FFD400]">
+                        {item.price.toFixed(2)} <span className="text-[10px] text-white/40 font-normal">{locale === "en" ? "AED" : "درهم"}</span>
                       </span>
                       
-                      {/* Action trigger group */}
-                      <div className="flex items-center gap-2">
-                        {/* Quick Add Button */}
-                        <button
-                          onClick={(e) => handleQuickAdd(item, e)}
-                          className={`w-9 h-9 rounded-xl flex items-center justify-center transition-all ${
-                            isAdded
-                              ? "bg-green-600 text-white"
-                              : "bg-[#121212] hover:bg-[#C41218] text-white border border-white/5"
-                          }`}
-                          title="Quick Add with default options"
-                        >
-                          {isAdded ? <Check className="w-4 h-4" /> : <Plus className="w-4 h-4" />}
-                        </button>
-                      </div>
+                      {/* Quick Add Button */}
+                      <button
+                        onClick={(e) => handleQuickAdd(item, e)}
+                        className={`w-8 h-8 rounded-lg flex items-center justify-center transition-colors ${
+                          isAdded
+                            ? "bg-green-600 text-white"
+                            : "bg-[#121212] hover:bg-[#C41218] text-white border border-white/5"
+                        }`}
+                      >
+                        {isAdded ? <Check className="w-4 h-4" /> : <Plus className="w-4 h-4" />}
+                      </button>
                     </div>
                   </div>
-                </motion.div>
+                </div>
               );
             })}
           </motion.div>

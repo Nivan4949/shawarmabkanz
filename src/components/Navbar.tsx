@@ -5,7 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useLanguage } from "@/context/LanguageContext";
 import { useCart } from "@/context/CartContext";
-import { ShoppingBag, Globe, Home, UtensilsCrossed, Percent, Shield } from "lucide-react";
+import { ShoppingBag, Globe, UtensilsCrossed, Percent } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
 export const Navbar: React.FC = () => {
@@ -31,14 +31,13 @@ export const Navbar: React.FC = () => {
   const navLinks = [
     { label: locale === "en" ? "Menu" : "القائمة", href: "/" },
     { label: locale === "en" ? "Offers" : "العروض", href: "/offers" },
-    { label: locale === "en" ? "Admin" : "المدير", href: "/admin" },
   ];
 
   return (
     <>
       <header
         className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 border-b border-white/5 backdrop-blur-md ${
-          isShrunk ? "h-14 bg-[#0E0E0E]/95 shadow-md" : "h-16 bg-[#161616]/80"
+          isShrunk ? "h-14 bg-[#1C0204]/95 shadow-md" : "h-16 bg-[#240407]/80"
         } flex items-center`}
       >
         <div className="w-[90%] max-w-[1200px] mx-auto flex items-center justify-between">
@@ -117,7 +116,7 @@ export const Navbar: React.FC = () => {
       </header>
 
       {/* Mobile Bottom Navigation Bar */}
-      <div className="fixed bottom-0 left-0 right-0 z-40 bg-[#0E0E0E]/95 border-t border-white/10 backdrop-blur-md py-2 px-6 flex items-center justify-around md:hidden shadow-lg shadow-black">
+      <div className="fixed bottom-0 left-0 right-0 z-40 bg-[#1C0204]/95 border-t border-white/10 backdrop-blur-md py-2 px-6 flex items-center justify-around md:hidden shadow-lg shadow-black">
         <Link href="/" className={`flex flex-col items-center gap-1 text-[9px] font-bold ${pathname === "/" ? "text-[#FFD400]" : "text-white/50"}`}>
           <UtensilsCrossed className="w-4.5 h-4.5" />
           <span>{locale === "en" ? "Menu" : "القائمة"}</span>
@@ -136,10 +135,6 @@ export const Navbar: React.FC = () => {
         <Link href="/offers" className={`flex flex-col items-center gap-1 text-[9px] font-bold ${pathname === "/offers" ? "text-[#FFD400]" : "text-white/50"}`}>
           <Percent className="w-4.5 h-4.5" />
           <span>{locale === "en" ? "Offers" : "العروض"}</span>
-        </Link>
-        <Link href="/admin" className={`flex flex-col items-center gap-1 text-[9px] font-bold ${pathname === "/admin" ? "text-[#FFD400]" : "text-white/50"}`}>
-          <Shield className="w-4.5 h-4.5" />
-          <span>{locale === "en" ? "Admin" : "المدير"}</span>
         </Link>
       </div>
     </>

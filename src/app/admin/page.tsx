@@ -5,14 +5,15 @@ import { useLanguage } from "@/context/LanguageContext";
 import { 
   TrendingUp, 
   ShoppingBag, 
-  QrCode, 
   Smartphone, 
   DollarSign, 
   Users, 
   CheckCircle2, 
   ChevronRight, 
   Search,
-  Power
+  Power,
+  ShieldAlert,
+  Lock
 } from "lucide-react";
 
 export default function AdminPage() {
@@ -21,11 +22,43 @@ export default function AdminPage() {
   const [orders, setOrders] = useState<any[]>([]);
   const [searchQuery, setSearchQuery] = useState("");
 
+  // Authentication State
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [passwordInput, setPasswordInput] = useState("");
+  const [loginError, setLoginError] = useState(false);
+
+  // Check login flag on mount
+  useEffect(() => {
+    const flag = sessionStorage.getItem("kanz_admin_logged");
+    if (flag === "true") {
+      setIsAuthenticated(true);
+    }
+  }, []);
+
+  const handleLoginSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (passwordInput === "kanz2026") {
+      setIsAuthenticated(true);
+      sessionStorage.setItem("kanz_admin_logged", "true");
+      setLoginError(false);
+    } else {
+      setLoginError(true);
+    }
+  };
+
+  const handleLogout = () => {
+    setIsAuthenticated(false);
+    sessionStorage.removeItem("kanz_admin_logged");
+    setPasswordInput("");
+  };
+
   // Load orders on mount
   useEffect(() => {
-    const loaded = JSON.parse(localStorage.getItem("kanz_orders") || "[]");
-    setOrders(loaded);
-  }, []);
+    if (isAuthenticated) {
+      const loaded = JSON.parse(localStorage.getItem("kanz_orders") || "[]");
+      setOrders(loaded);
+    }
+  }, [isAuthenticated]);
 
   // Update order status
   const handleUpdateStatus = (orderId: string, nextStatus: string) => {
@@ -72,8 +105,60 @@ export default function AdminPage() {
     o.phone.includes(searchQuery)
   );
 
+  // Render Login Card if not logged in
+  if (!isAuthenticated) {
+    return (
+      <div className="bg-[#1C0204] text-[#FFFFFF] min-h-screen flex items-center justify-center p-6">
+        <div className="w-full max-w-[380px] bg-[#2C0609] border border-white/5 rounded-xl p-6 shadow-2xl space-y-6 text-center">
+          <div className="w-12 h-12 rounded-full bg-[#C41218]/10 text-[#C41218] border border-[#C41218]/25 flex items-center justify-center mx-auto">
+            <Lock className="w-5 h-5" />
+          </div>
+
+          <div>
+            <h1 className="text-lg font-black uppercase tracking-wide">
+              {locale === "en" ? "Kanz Command Suite" : "لوحة تحكم كنز"}
+            </h1>
+            <p className="text-[10px] text-white/40 mt-1 uppercase tracking-widest">
+              {locale === "en" ? "Restricted Area passcode needed" : "منطقة محظورة تتطلب كلمة مرور"}
+            </p>
+          </div>
+
+          <form onSubmit={handleLoginSubmit} className="space-y-4">
+            <div className="flex flex-col gap-1.5 text-left">
+              <label className="text-[9px] text-white/40 uppercase font-black tracking-wider">
+                {locale === "en" ? "Security Key" : "مفتاح الأمان"}
+              </label>
+              <input
+                type="password"
+                required
+                value={passwordInput}
+                onChange={(e) => setPasswordInput(e.target.value)}
+                placeholder="••••••••"
+                className="w-full bg-[#1C0204] border border-white/5 rounded-lg px-4 py-2.5 text-xs text-white focus:outline-none focus:border-[#C41218] text-center font-mono"
+              />
+            </div>
+
+            {loginError && (
+              <p className="text-[10px] text-red-500 font-bold flex items-center justify-center gap-1">
+                <ShieldAlert className="w-3.5 h-3.5" />
+                <span>{locale === "en" ? "Incorrect key!" : "مفتاح الأمان غير صحيح!"}</span>
+              </p>
+            )}
+
+            <button
+              type="submit"
+              className="w-full py-2.5 rounded-lg bg-[#C41218] hover:bg-[#FF7A00] text-white text-xs font-bold uppercase tracking-wider transition-colors"
+            >
+              {locale === "en" ? "Unlock Console" : "فتح لوحة التحكم"}
+            </button>
+          </form>
+        </div>
+      </div>
+    );
+  }
+
   return (
-    <div className="bg-[#0E0E0E] text-[#FFFFFF] pt-28 pb-20 min-h-screen">
+    <div className="bg-[#1C0204] text-[#FFFFFF] pt-28 pb-20 min-h-screen">
       <div className="w-[90%] max-w-[1200px] mx-auto">
         
         {/* Header */}
@@ -88,7 +173,7 @@ export default function AdminPage() {
           </div>
 
           {/* Tab Navigation buttons */}
-          <div className="flex flex-wrap gap-2 bg-[#181818] p-1 rounded-lg border border-white/5 self-start">
+          <div className="flex flex-wrap items-center gap-2 bg-[#2C0609] p-1 rounded-lg border border-white/5 self-start">
             <button
               onClick={() => setActiveTab("dashboard")}
               className={`px-3 py-1.5 rounded text-xs font-bold transition-all ${
@@ -132,6 +217,15 @@ export default function AdminPage() {
             >
               PWA
             </button>
+            
+            {/* Lock Console Out */}
+            <button
+              onClick={handleLogout}
+              className="px-2.5 py-1.5 rounded bg-white/5 text-red-500 hover:bg-[#C41218] hover:text-white transition-colors"
+              title="Lock Admin Console"
+            >
+              <Power className="w-3.5 h-3.5" />
+            </button>
           </div>
         </div>
 
@@ -140,7 +234,7 @@ export default function AdminPage() {
           <div className="space-y-8">
             {/* Overview Stats Cards */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-              <div className="bg-[#181818] border border-white/5 p-5 rounded-xl flex items-center justify-between">
+              <div className="bg-[#2C0609] border border-white/5 p-5 rounded-xl flex items-center justify-between">
                 <div>
                   <span className="text-[10px] uppercase font-black text-white/40">{locale === "en" ? "Total Revenue" : "إجمالي الإيرادات"}</span>
                   <h3 className="text-2xl font-black text-[#FFD400] mt-1">{totalRevenue.toFixed(2)} AED</h3>
@@ -150,7 +244,7 @@ export default function AdminPage() {
                 </div>
               </div>
 
-              <div className="bg-[#181818] border border-white/5 p-5 rounded-xl flex items-center justify-between">
+              <div className="bg-[#2C0609] border border-white/5 p-5 rounded-xl flex items-center justify-between">
                 <div>
                   <span className="text-[10px] uppercase font-black text-white/40">{locale === "en" ? "Total Bookings" : "إجمالي الطلبات"}</span>
                   <h3 className="text-2xl font-black text-white mt-1">{orders.length}</h3>
@@ -160,7 +254,7 @@ export default function AdminPage() {
                 </div>
               </div>
 
-              <div className="bg-[#181818] border border-white/5 p-5 rounded-xl flex items-center justify-between">
+              <div className="bg-[#2C0609] border border-white/5 p-5 rounded-xl flex items-center justify-between">
                 <div>
                   <span className="text-[10px] uppercase font-black text-white/40">{locale === "en" ? "Average Value" : "متوسط الطلب"}</span>
                   <h3 className="text-2xl font-black text-white mt-1">{avgOrder.toFixed(2)} AED</h3>
@@ -170,7 +264,7 @@ export default function AdminPage() {
                 </div>
               </div>
 
-              <div className="bg-[#181818] border border-white/5 p-5 rounded-xl flex items-center justify-between">
+              <div className="bg-[#2C0609] border border-white/5 p-5 rounded-xl flex items-center justify-between">
                 <div>
                   <span className="text-[10px] uppercase font-black text-white/40">{locale === "en" ? "Active Sessions" : "المستخدمين النشطين"}</span>
                   <h3 className="text-2xl font-black text-[#FF7A00] mt-1">42</h3>
@@ -184,7 +278,7 @@ export default function AdminPage() {
             {/* Split statistics */}
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
               {/* Left: Orders by Delivery Type (Bar Chart) */}
-              <div className="bg-[#181818] border border-white/5 p-5 rounded-xl lg:col-span-8 space-y-4">
+              <div className="bg-[#2C0609] border border-white/5 p-5 rounded-xl lg:col-span-8 space-y-4">
                 <h3 className="text-xs font-bold text-white uppercase tracking-wider">{locale === "en" ? "Sales Breakdown by Channel" : "توزيع قنوات البيع"}</h3>
                 
                 <div className="space-y-3 pt-2">
@@ -194,7 +288,7 @@ export default function AdminPage() {
                       <span>{locale === "en" ? "Home Delivery" : "توصيل للمنازل"} ({deliveryCount})</span>
                       <span className="text-[#FFD400] font-black">{orders.length > 0 ? ((deliveryCount/orders.length)*100).toFixed(0) : 0}%</span>
                     </div>
-                    <div className="h-2 w-full bg-[#121212] rounded-full overflow-hidden">
+                    <div className="h-2 w-full bg-[#1C0204] rounded-full overflow-hidden">
                       <div className="h-full bg-[#C41218] rounded-full" style={{ width: `${orders.length > 0 ? (deliveryCount/orders.length)*100 : 0}%` }} />
                     </div>
                   </div>
@@ -205,7 +299,7 @@ export default function AdminPage() {
                       <span>{locale === "en" ? "Dine-in QR Orders" : "طلبات الطاولات بالـ QR"} ({dineinCount})</span>
                       <span className="text-[#FFD400] font-black">{orders.length > 0 ? ((dineinCount/orders.length)*100).toFixed(0) : 0}%</span>
                     </div>
-                    <div className="h-2 w-full bg-[#121212] rounded-full overflow-hidden">
+                    <div className="h-2 w-full bg-[#1C0204] rounded-full overflow-hidden">
                       <div className="h-full bg-[#FFD400] rounded-full" style={{ width: `${orders.length > 0 ? (dineinCount/orders.length)*100 : 0}%` }} />
                     </div>
                   </div>
@@ -216,7 +310,7 @@ export default function AdminPage() {
                       <span>{locale === "en" ? "Takeaway Pickup" : "سفري واستلام"} ({takeawayCount})</span>
                       <span className="text-[#FFD400] font-black">{orders.length > 0 ? ((takeawayCount/orders.length)*100).toFixed(0) : 0}%</span>
                     </div>
-                    <div className="h-2 w-full bg-[#121212] rounded-full overflow-hidden">
+                    <div className="h-2 w-full bg-[#1C0204] rounded-full overflow-hidden">
                       <div className="h-full bg-[#FF7A00] rounded-full" style={{ width: `${orders.length > 0 ? (takeawayCount/orders.length)*100 : 0}%` }} />
                     </div>
                   </div>
@@ -224,14 +318,14 @@ export default function AdminPage() {
               </div>
 
               {/* Right: Hearth loads */}
-              <div className="bg-[#181818] border border-white/5 p-5 rounded-xl lg:col-span-4 space-y-3">
+              <div className="bg-[#2C0609] border border-white/5 p-5 rounded-xl lg:col-span-4 space-y-3">
                 <h3 className="text-xs font-bold text-white uppercase tracking-wider">{locale === "en" ? "Realtime Hearth Load" : "حالة مواقد الشواء"}</h3>
                 <div className="space-y-2 pt-1 text-[11px]">
-                  <div className="flex items-center justify-between p-2.5 bg-[#121212] rounded border border-white/5">
+                  <div className="flex items-center justify-between p-2.5 bg-[#1C0204] rounded border border-white/5">
                     <span className="text-white/50">Spit Rotisserie 01</span>
                     <span className="text-green-500 font-bold">Active 380°C</span>
                   </div>
-                  <div className="flex items-center justify-between p-2.5 bg-[#121212] rounded border border-white/5">
+                  <div className="flex items-center justify-between p-2.5 bg-[#1C0204] rounded border border-white/5">
                     <span className="text-white/50">Spit Rotisserie 02</span>
                     <span className="text-green-500 font-bold">Active 410°C</span>
                   </div>
@@ -251,14 +345,14 @@ export default function AdminPage() {
                 placeholder={locale === "en" ? "Search orders..." : "ابحث برقم الطلب، الاسم، أو الهاتف..."}
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full bg-[#181818] border border-white/5 rounded-xl py-2.5 pl-9 pr-4 text-xs text-[#FFFFFF] focus:outline-none focus:border-[#C41218] placeholder-white/30"
+                className="w-full bg-[#2C0609] border border-white/5 rounded-xl py-2.5 pl-9 pr-4 text-xs text-[#FFFFFF] focus:outline-none focus:border-[#C41218] placeholder-white/30"
               />
               <Search className="absolute top-3 left-3 w-4 h-4 text-white/30" />
             </div>
 
             {/* List */}
             {filteredOrders.length === 0 ? (
-              <div className="text-center py-20 bg-[#181818] rounded-xl border border-white/5">
+              <div className="text-center py-20 bg-[#2C0609] rounded-xl border border-white/5">
                 <p className="text-xs text-white/40">
                   {locale === "en" ? "No orders found." : "لا توجد طلبات في قاعدة البيانات حالياً."}
                 </p>
@@ -266,7 +360,7 @@ export default function AdminPage() {
             ) : (
               <div className="space-y-3">
                 {filteredOrders.map((order) => (
-                  <div key={order.id} className="bg-[#181818] border border-white/5 rounded-xl p-5 space-y-4">
+                  <div key={order.id} className="bg-[#2C0609] border border-white/5 rounded-xl p-5 space-y-4">
                     
                     {/* Order header details */}
                     <div className="flex flex-wrap items-center justify-between gap-4 border-b border-white/5 pb-3">
@@ -300,7 +394,7 @@ export default function AdminPage() {
                                 key={status}
                                 onClick={() => handleUpdateStatus(order.id, status)}
                                 className={`px-2 py-0.5 rounded text-[8px] font-black uppercase transition-colors ${
-                                  isCurrent ? colors[status] : "bg-[#121212] text-white/30 hover:text-white"
+                                  isCurrent ? colors[status] : "bg-[#1C0204] text-white/30 hover:text-white"
                                 }`}
                               >
                                 {status}
@@ -350,7 +444,7 @@ export default function AdminPage() {
         {activeTab === "coupons" && (
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {coupons.map((coupon) => (
-              <div key={coupon.code} className={`bg-[#181818] border p-5 rounded-xl flex flex-col justify-between h-36 ${coupon.active ? "border-white/5" : "border-white/5 opacity-40"}`}>
+              <div key={coupon.code} className={`bg-[#2C0609] border p-5 rounded-xl flex flex-col justify-between h-36 ${coupon.active ? "border-white/5" : "border-white/5 opacity-40"}`}>
                 <div className="flex justify-between items-start">
                   <div>
                     <h4 className="text-base font-black tracking-wider text-[#FFD400]">{coupon.code}</h4>
@@ -378,7 +472,7 @@ export default function AdminPage() {
         {/* QR Code Generator Tab Content */}
         {activeTab === "qr" && (
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-            <div className="bg-[#181818] border border-white/5 p-5 rounded-xl lg:col-span-7 space-y-4">
+            <div className="bg-[#2C0609] border border-white/5 p-5 rounded-xl lg:col-span-7 space-y-4">
               <h3 className="text-xs font-bold text-white uppercase tracking-wider">{locale === "en" ? "Create Table QR" : "توليد رمز QR"}</h3>
               <form onSubmit={handleGenerateQr} className="space-y-4">
                 <div className="grid grid-cols-2 gap-4">
@@ -389,7 +483,7 @@ export default function AdminPage() {
                       value={qrTable}
                       onChange={(e) => setQrTable(e.target.value)}
                       placeholder="e.g. 5"
-                      className="bg-[#121212] border border-white/5 rounded-lg px-4 py-2.5 text-xs text-white focus:outline-none focus:border-[#C41218]"
+                      className="bg-[#1C0204] border border-white/5 rounded-lg px-4 py-2.5 text-xs text-white focus:outline-none focus:border-[#C41218]"
                     />
                   </div>
                   
@@ -398,7 +492,7 @@ export default function AdminPage() {
                     <select
                       value={qrType}
                       onChange={(e) => setQrType(e.target.value)}
-                      className="bg-[#121212] border border-white/5 rounded-lg px-4 py-2.5 text-xs text-white focus:outline-none focus:border-[#C41218]"
+                      className="bg-[#1C0204] border border-white/5 rounded-lg px-4 py-2.5 text-xs text-white focus:outline-none focus:border-[#C41218]"
                     >
                       <option value="dinein">{locale === "en" ? "Dine-in (Table)" : "خدمة طاولات"}</option>
                       <option value="takeaway">{locale === "en" ? "Takeaway" : "استلام سفري"}</option>
@@ -415,7 +509,7 @@ export default function AdminPage() {
               </form>
             </div>
 
-            <div className="bg-[#181818] border border-white/5 p-5 rounded-xl lg:col-span-5 flex flex-col items-center justify-center text-center space-y-4 min-h-[260px]">
+            <div className="bg-[#2C0609] border border-white/5 p-5 rounded-xl lg:col-span-5 flex flex-col items-center justify-center text-center space-y-4 min-h-[260px]">
               {showQr ? (
                 <>
                   <div className="relative p-3 bg-white rounded-xl w-40 h-40 flex items-center justify-center shadow">
@@ -461,7 +555,7 @@ export default function AdminPage() {
 
         {/* PWA Settings Content */}
         {activeTab === "pwa" && (
-          <div className="bg-[#181818] border border-white/5 p-5 rounded-xl space-y-4">
+          <div className="bg-[#2C0609] border border-white/5 p-5 rounded-xl space-y-4">
             <h3 className="text-sm font-bold text-white flex items-center gap-2">
               <Smartphone className="w-5 h-5 text-[#FFD400]" />
               <span>Mobile Application (PWA) Core Registry</span>
@@ -469,7 +563,7 @@ export default function AdminPage() {
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs pt-1">
               <div className="space-y-3">
-                <div className="flex justify-between items-center p-3.5 bg-[#121212] rounded border border-white/5">
+                <div className="flex justify-between items-center p-3.5 bg-[#1C0204] rounded border border-white/5">
                   <div>
                     <h5 className="font-bold">Offline Shell Pre-Caching</h5>
                     <p className="text-[9px] text-white/40 mt-0.5">Asset cache registered via Service Worker</p>
@@ -477,7 +571,7 @@ export default function AdminPage() {
                   <span className="px-2 py-0.5 rounded bg-green-500/10 text-green-500 font-bold text-[8px]">Enabled</span>
                 </div>
 
-                <div className="flex justify-between items-center p-3.5 bg-[#121212] rounded border border-white/5">
+                <div className="flex justify-between items-center p-3.5 bg-[#1C0204] rounded border border-white/5">
                   <div>
                     <h5 className="font-bold">Standalone UI Mode</h5>
                     <p className="text-[9px] text-white/40 mt-0.5">Launches without native browser URL bars</p>
@@ -487,7 +581,7 @@ export default function AdminPage() {
               </div>
 
               <div className="space-y-3">
-                <div className="flex justify-between items-center p-3.5 bg-[#121212] rounded border border-white/5">
+                <div className="flex justify-between items-center p-3.5 bg-[#1C0204] rounded border border-white/5">
                   <div>
                     <h5 className="font-bold">Push Notifications Endpoint</h5>
                     <p className="text-[9px] text-white/40 mt-0.5">FCM mock listeners for dispatching fire alert deals</p>
@@ -495,7 +589,7 @@ export default function AdminPage() {
                   <span className="px-2 py-0.5 rounded bg-amber-500/10 text-amber-500 font-bold text-[8px]">Standby</span>
                 </div>
 
-                <div className="flex justify-between items-center p-3.5 bg-[#121212] rounded border border-white/5">
+                <div className="flex justify-between items-center p-3.5 bg-[#1C0204] rounded border border-white/5">
                   <div>
                     <h5 className="font-bold">App Icon Assets</h5>
                     <p className="text-[9px] text-white/40 mt-0.5">Maskable branding PNG verified</p>

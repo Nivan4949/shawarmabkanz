@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useCart } from "@/context/CartContext";
 import { useLanguage } from "@/context/LanguageContext";
@@ -27,6 +27,17 @@ export const CartDrawer: React.FC = () => {
 
   const [couponInput, setCouponInput] = useState("");
   const [couponError, setCouponError] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+
+  // Monitor screen size to toggle Bottom Sheet vs Side Drawer layout
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 640);
+    };
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   const subtotal = cart.reduce((sum, item) => sum + item.unitPrice * item.quantity, 0);
   const tax = subtotal * 0.14;
@@ -60,14 +71,21 @@ export const CartDrawer: React.FC = () => {
   };
 
   const drawerVariants = {
-    hidden: { x: isRtl ? "-100%" : "100%" },
-    visible: { x: 0 },
+    hidden: isMobile 
+      ? { y: "100%" } 
+      : { x: isRtl ? "-100%" : "100%" },
+    visible: isMobile 
+      ? { y: 0 } 
+      : { x: 0 },
+    exit: isMobile 
+      ? { y: "100%" } 
+      : { x: isRtl ? "-100%" : "100%" }
   };
 
   return (
     <AnimatePresence>
       {isCartOpen && (
-        <div className="fixed inset-0 z-50 flex overflow-hidden">
+        <div className="fixed inset-0 z-50 flex overflow-hidden max-sm:items-end">
           {/* Overlay */}
           <motion.div
             initial={{ opacity: 0 }}
@@ -77,17 +95,24 @@ export const CartDrawer: React.FC = () => {
             className="absolute inset-0 bg-black/60 backdrop-blur-sm"
           />
 
-          {/* Drawer Body */}
+          {/* Drawer Body: Side Drawer on Desktop, Bottom Sheet on Mobile */}
           <motion.div
             initial="hidden"
             animate="visible"
-            exit="hidden"
+            exit="exit"
             variants={drawerVariants}
             transition={{ type: "tween", duration: 0.3 }}
-            className={`absolute top-0 ${
-              isRtl ? "left-0" : "right-0"
-            } w-full max-w-[440px] h-full bg-white border-t lg:border-t-0 border-neutral-200 shadow-2xl flex flex-col z-10 text-[#1A1A1A]`}
+            className={`bg-white border-t sm:border-t-0 border-neutral-200 shadow-2xl flex flex-col z-10 text-[#1A1A1A] relative w-full sm:max-w-[440px] h-[85vh] sm:h-full ${
+              isMobile 
+                ? "rounded-t-3xl border-t border-neutral-350"
+                : (isRtl ? "absolute top-0 left-0 border-r" : "absolute top-0 right-0 border-l")
+            }`}
           >
+            {/* Mobile Visual Drag Handle */}
+            {isMobile && (
+              <div className="w-12 h-1 bg-neutral-300 rounded-full mx-auto mt-3 shrink-0" />
+            )}
+
             {/* Header */}
             <div className="p-5 border-b border-neutral-200 flex items-center justify-between">
               <h3 className="text-sm font-black flex items-center gap-2 text-neutral-850">
@@ -148,7 +173,7 @@ export const CartDrawer: React.FC = () => {
             )}
 
             {/* Cart Items List */}
-            <div className="flex-grow p-5 overflow-y-auto flex flex-col gap-3 scrollbar-none">
+            <div className="flex-grow p-5 overflow-y-auto flex flex-col gap-3 scrollbar-none pb-28">
               {cart.length === 0 ? (
                 <div className="flex flex-col items-center justify-center mt-20 text-center gap-3">
                   <span className="text-4xl">🛒</span>
@@ -233,7 +258,7 @@ export const CartDrawer: React.FC = () => {
 
             {/* Footer calculations */}
             {cart.length > 0 && (
-              <div className="p-5 border-t border-neutral-200 bg-neutral-50 flex flex-col gap-3">
+              <div className="absolute bottom-0 left-0 right-0 p-5 border-t border-neutral-200 bg-neutral-50 flex flex-col gap-3 z-25">
                 
                 {/* Coupon Input Form */}
                 <form onSubmit={handleApplyCoupon} className="flex gap-2">
@@ -273,33 +298,28 @@ export const CartDrawer: React.FC = () => {
                 )}
 
                 {/* Subtotals & Taxes */}
-                <div className="flex flex-col gap-1.5 border-t border-neutral-200 pt-3">
-                  <div className="flex justify-between text-xs text-neutral-500">
+                <div className="flex flex-col gap-1 text-xs border-t border-neutral-200 pt-2">
+                  <div className="flex justify-between text-[11px] text-neutral-500">
                     <span>{t("cart_subtotal")}</span>
                     <span>{subtotal.toFixed(2)} {locale === "en" ? "AED" : "درهم"}</span>
                   </div>
-                  <div className="flex justify-between text-xs text-neutral-500">
-                    <span>{t("cart_tax")}</span>
-                    <span>{tax.toFixed(2)} {locale === "en" ? "AED" : "درهم"}</span>
-                  </div>
                   {deliveryType === "delivery" && (
-                    <div className="flex justify-between text-xs text-neutral-500">
+                    <div className="flex justify-between text-[11px] text-neutral-500">
                       <span>{locale === "en" ? "Delivery Fee" : "رسوم التوصيل"}</span>
                       <span>{deliveryFee.toFixed(2)} {locale === "en" ? "AED" : "درهم"}</span>
                     </div>
                   )}
                   {couponCode && (
-                    <div className="flex justify-between text-xs text-green-600 font-bold">
+                    <div className="flex justify-between text-[11px] text-green-600 font-bold">
                       <span className="flex items-center gap-1">
-                        <Percent className="w-3 h-3" />
                         <span>Discount ({discountPercent}%)</span>
                       </span>
                       <span>-{discount.toFixed(2)} {locale === "en" ? "AED" : "درهم"}</span>
                     </div>
                   )}
-                  <div className="flex justify-between text-sm font-black text-neutral-850 mt-1 pt-2 border-t border-neutral-200">
+                  <div className="flex justify-between text-xs font-black text-neutral-850 border-t border-neutral-200 pt-2 mt-1">
                     <span>{t("cart_total")}</span>
-                    <span className="text-[#C41218] text-base font-black">
+                    <span className="text-[#C41218] text-sm font-black">
                       {total.toFixed(2)} {locale === "en" ? "AED" : "درهم"}
                     </span>
                   </div>
@@ -307,7 +327,7 @@ export const CartDrawer: React.FC = () => {
 
                 <button
                   onClick={handleCheckoutClick}
-                  className="w-full py-3 rounded-lg bg-[#C41218] hover:bg-[#FF7A00] text-white font-black text-xs uppercase tracking-wider text-center transition-colors flex items-center justify-center gap-2 shadow-md shadow-[#C41218]/10"
+                  className="w-full py-2.5 rounded-lg bg-[#C41218] hover:bg-[#FF7A00] text-white font-black text-xs uppercase tracking-wider text-center transition-colors flex items-center justify-center gap-2 shadow-md shadow-[#C41218]/10"
                 >
                   <Percent className="w-4 h-4" />
                   <span>{locale === "en" ? "Proceed to Checkout" : "الذهاب للدفع"}</span>

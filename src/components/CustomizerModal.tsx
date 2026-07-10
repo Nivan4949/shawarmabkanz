@@ -21,6 +21,17 @@ export const CustomizerModal: React.FC = () => {
   const [selectedBreadIndex, setSelectedBreadIndex] = useState(0);
   const [selectedAddons, setSelectedAddons] = useState<AddonOption[]>([]);
   const [totalPrice, setTotalPrice] = useState(0);
+  const [isMobile, setIsMobile] = useState(false);
+
+  // Monitor screen size to toggle Bottom Sheet vs Side Drawer layout
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 640);
+    };
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   // Reset local state when item changes
   useEffect(() => {
@@ -104,7 +115,7 @@ export const CustomizerModal: React.FC = () => {
       addons: [],
       unitPrice: 6.00,
       quantity: 1,
-      image: "/assets/pomegranate_drink.png"
+      image: "/assets/logo.png"
     };
     addToCart(pomeDrink);
   };
@@ -112,10 +123,23 @@ export const CustomizerModal: React.FC = () => {
   const name = locale === "en" ? customizerItem.nameEn : customizerItem.nameAr;
   const desc = locale === "en" ? customizerItem.descEn : customizerItem.descAr;
 
+  // Responsive motion animation variables
+  const panelVariants = {
+    hidden: isMobile 
+      ? { y: "100%" } 
+      : { x: isRtl ? "-100%" : "100%" },
+    visible: isMobile 
+      ? { y: 0 } 
+      : { x: 0 },
+    exit: isMobile 
+      ? { y: "100%" } 
+      : { x: isRtl ? "-100%" : "100%" }
+  };
+
   return (
     <AnimatePresence>
       {isCustomizerOpen && (
-        <div className="fixed inset-0 z-50 flex justify-end">
+        <div className="fixed inset-0 z-50 flex justify-end max-sm:items-end">
           {/* Backdrop Overlay */}
           <motion.div
             initial={{ opacity: 0 }}
@@ -125,32 +149,40 @@ export const CustomizerModal: React.FC = () => {
             className="absolute inset-0 bg-black/60 backdrop-blur-sm"
           />
 
-          {/* Slide-out Panel Drawer */}
+          {/* Panel Wrapper: Side Drawer on Desktop, Bottom Sheet on Mobile */}
           <motion.div
-            initial={{ x: isRtl ? "-100%" : "100%" }}
-            animate={{ x: 0 }}
-            exit={{ x: isRtl ? "-100%" : "100%" }}
+            initial="hidden"
+            animate="visible"
+            exit="exit"
+            variants={panelVariants}
             transition={{ type: "tween", duration: 0.3 }}
-            className={`relative bg-white border-t lg:border-t-0 border-neutral-200 w-full sm:w-[420px] h-full overflow-hidden shadow-2xl z-10 flex flex-col text-[#1A1A1A] ${
-              isRtl ? "left-0 border-r" : "right-0 border-l"
+            className={`bg-white border-t sm:border-t-0 border-neutral-200 w-full sm:w-[420px] h-[85vh] sm:h-full overflow-hidden shadow-2xl z-10 flex flex-col text-[#1A1A1A] relative ${
+              isMobile 
+                ? "rounded-t-3xl border-t border-neutral-350" 
+                : (isRtl ? "left-0 border-r" : "right-0 border-l")
             }`}
           >
+            {/* Mobile Visual Drag Handle */}
+            {isMobile && (
+              <div className="w-12 h-1 bg-neutral-300 rounded-full mx-auto mt-3 shrink-0" />
+            )}
+
             {/* Header Area */}
             <div className="p-5 border-b border-neutral-200 flex items-center justify-between">
-              <div>
-                <h3 className="text-sm font-black tracking-tight text-neutral-850">{name}</h3>
-                <p className="text-[10px] text-neutral-500 leading-tight mt-1">{desc}</p>
+              <div className="pr-4 overflow-hidden">
+                <h3 className="text-sm font-black tracking-tight text-neutral-800 truncate">{name}</h3>
+                <p className="text-[10px] text-neutral-400 leading-tight mt-1 line-clamp-1">{desc}</p>
               </div>
               <button
                 onClick={closeCustomizer}
-                className="w-8 h-8 rounded-full bg-neutral-100 border border-neutral-200 flex items-center justify-center text-neutral-600 hover:text-[#C41218] transition-colors"
+                className="w-8 h-8 rounded-full bg-neutral-100 border border-neutral-200 flex items-center justify-center text-neutral-600 hover:text-[#C41218] transition-colors shrink-0"
               >
                 <X className="w-4 h-4" />
               </button>
             </div>
 
             {/* Scrollable Customization Options */}
-            <div className="flex-grow overflow-y-auto p-5 space-y-6 scrollbar-none pb-24">
+            <div className="flex-grow overflow-y-auto p-5 space-y-6 scrollbar-none pb-28">
               
               {/* Sizes Group */}
               {customizerItem.sizes.length > 0 && (

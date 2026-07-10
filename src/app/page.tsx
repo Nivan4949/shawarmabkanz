@@ -92,7 +92,7 @@ export default function Home() {
                 </h2>
 
                 {/* Full-screen 4-column cards grid */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 justify-items-center">
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
                   {filteredCatItems.map((item) => {
                     const name = locale === "en" ? item.nameEn : item.nameAr;
                     const isSpicy = item.descEn.toLowerCase().includes("spicy") || 
@@ -104,7 +104,7 @@ export default function Home() {
                       <div
                         key={item.id}
                         onClick={() => openCustomizer(item.id)}
-                        className="bg-white rounded-lg border border-neutral-200/60 overflow-hidden flex flex-col hover:shadow-md transition-all duration-200 cursor-pointer w-full max-w-[320px] mx-auto"
+                        className="bg-white rounded-lg border border-neutral-200/60 overflow-hidden flex flex-col hover:shadow-md transition-all duration-200 cursor-pointer w-full max-w-[320px] sm:max-w-none mx-auto sm:mx-0"
                       >
                         {/* Image preview */}
                         <div className="relative h-32 overflow-hidden bg-neutral-50/50 p-2">

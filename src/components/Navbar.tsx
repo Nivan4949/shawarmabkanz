@@ -199,7 +199,7 @@ export const Navbar: React.FC = () => {
             <div className="w-[90%] max-w-[1200px] mx-auto flex items-center justify-between gap-4 h-full">
               
               {/* Scrollable Categories List */}
-              <div className="flex items-center gap-3.5 overflow-x-auto scrollbar-none py-1.5 px-4 w-full md:w-auto h-full">
+              <div className="flex items-center gap-3.5 overflow-x-auto scrollbar-none py-1.5 px-4 md:px-0 w-full md:w-auto h-full">
                 {categories.map((cat) => {
                   const isActive = activeCategory === cat.id;
                   const label = (locale === "ar" ? cat.labelAr : cat.labelEn) || cat.labelEn;

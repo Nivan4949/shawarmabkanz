@@ -199,10 +199,10 @@ export const Navbar: React.FC = () => {
             <div className="w-[90%] max-w-[1200px] mx-auto flex items-center justify-between gap-4 h-full">
               
               {/* Scrollable Categories List */}
-              <div className="flex items-center gap-3.5 overflow-x-auto scrollbar-none py-1.5 pr-2 w-full md:w-auto h-full">
+              <div className="flex items-center gap-3.5 overflow-x-auto scrollbar-none py-1.5 px-4 w-full md:w-auto h-full">
                 {categories.map((cat) => {
                   const isActive = activeCategory === cat.id;
-                  const label = locale === "en" ? cat.labelEn : cat.labelAr;
+                  const label = (locale === "ar" ? cat.labelAr : cat.labelEn) || cat.labelEn;
                   return (
                     <button
                       key={cat.id}
@@ -210,7 +210,7 @@ export const Navbar: React.FC = () => {
                       className={`px-4 py-2 rounded-lg text-xs font-bold whitespace-nowrap transition-all duration-200 border flex items-center gap-1.5 shadow-sm active:scale-95 ${
                         isActive
                           ? "bg-[#C41218] text-white border-[#C41218]"
-                          : "bg-neutral-55 text-neutral-600 border-neutral-200/60 hover:bg-neutral-100 hover:text-[#C41218]"
+                          : "bg-neutral-100/70 text-neutral-600 border-neutral-200/60 hover:bg-neutral-100 hover:text-[#C41218]"
                       }`}
                     >
                       <span className="text-sm shrink-0">{cat.emoji}</span>
